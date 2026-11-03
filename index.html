@@ -9,6 +9,17 @@
   <meta property="og:title" content="Nathan Zurita | Desenvolvedor Full Stack">
   <meta property="og:description" content="Laravel, Vue 3, Nuxt, TypeScript e 3D na web. Veja meus projetos e experiência.">
   <meta property="og:type" content="website">
+  <meta property="og:url" content="https://nathan-zurita-student.github.io/">
+  <meta property="og:site_name" content="Nathan Zurita">
+  <meta property="og:locale" content="pt_BR">
+  <meta property="og:image" content="https://nathan-zurita-student.github.io/assets/og-image.jpg">
+  <meta property="og:image:type" content="image/jpeg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Nathan Zurita, Desenvolvedor Full Stack: Laravel, Vue 3, Nuxt, TypeScript e Three.js">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://nathan-zurita-student.github.io/assets/og-image.jpg">
+  <link rel="canonical" href="https://nathan-zurita-student.github.io/">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><defs><linearGradient id='g' x1='0' y1='0' x2='1' y2='1'><stop offset='0' stop-color='%238b7fff'/><stop offset='1' stop-color='%233dd6e6'/></linearGradient></defs><rect width='64' height='64' rx='16' fill='url(%23g)'/><text x='50%' y='55%' text-anchor='middle' dominant-baseline='middle' font-family='Arial' font-weight='900' font-size='26' fill='white'>NZ</text></svg>">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -35,6 +46,7 @@
       <circle cx="27.5" cy="12.5" r="2.2" fill="#fff"/>
     </symbol>
     <symbol id="i-lock" viewBox="0 0 24 24"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></symbol>
+    <symbol id="i-drag" viewBox="0 0 24 24"><path d="M12 3v18M3 12h18M12 3l-3 3M12 3l3 3M12 21l-3-3M12 21l3-3M3 12l3-3M3 12l3 3M21 12l-3-3M21 12l-3 3"/></symbol>
     <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M7 17 17 7M8 7h9v9"/></symbol>
     <symbol id="i-down" viewBox="0 0 24 24"><path d="M12 4v11m0 0-4-4m4 4 4-4M5 20h14"/></symbol>
     <symbol id="i-up" viewBox="0 0 24 24"><path d="M12 20V5m0 0-5 5m5-5 5 5"/></symbol>
@@ -178,10 +190,17 @@
         <h2 class="title">Projetos</h2>
         <div class="projects">
 
-          <article class="card tilt">
-            <div class="card__art art-sim">
+          <article class="card">
+            <div class="card__art art-sim" id="sim">
+              <span class="art-hint mono"><svg><use href="#i-drag"/></svg>Arraste para girar</span>
               <div class="cube"><div class="f f1"></div><div class="f f2"></div><div class="f f3"></div><div class="f f4"></div><div class="f f5"></div><div class="f f6"></div></div>
-              <div class="swatches"><i></i><i></i><i></i><i></i><i></i></div>
+              <div class="swatches" role="group" aria-label="Cor do produto">
+                <button type="button" class="is-active" style="--s:#8b7fff" data-c="139,127,255" aria-label="Roxo" aria-pressed="true"></button>
+                <button type="button" style="--s:#3dd6e6" data-c="61,214,230" aria-label="Ciano" aria-pressed="false"></button>
+                <button type="button" style="--s:#ff6ad5" data-c="255,106,213" aria-label="Rosa" aria-pressed="false"></button>
+                <button type="button" style="--s:#ffcb6b" data-c="255,203,107" aria-label="Amarelo" aria-pressed="false"></button>
+                <button type="button" style="--s:#ececf5" data-c="236,236,245" aria-label="Branco" aria-pressed="false"></button>
+              </div>
             </div>
             <div class="card__body">
               <div class="card__top"><span class="mono">01</span><span class="pill pill--lock"><svg><use href="#i-lock"/></svg>Corporativo · North Sales</span></div>
@@ -311,19 +330,14 @@
         <div class="bento">
           <div class="bento__item bento__item--big glass">
             <div class="bento__head"><span class="bento__ico"><svg><use href="#i-server"/></svg></span><h3>Backend &amp; APIs</h3></div>
-            <p>Arquitetura MVC, regras de negócio, autenticação e APIs REST seguras.</p>
-            <div class="term" aria-hidden="true">
-              <div class="term__bar"><span></span><span></span><span></span><em>api.http</em></div>
-<pre><code><b class="m">POST</b> /api/projetos
-<i>Authorization: Bearer ••••••••</i>
-<i>Content-Type: application/json</i>
-
-<b class="ok">201 Created</b> <i>· 84 ms</i>
-{
-  <span class="k">"id"</span>: <span class="n">42</span>,
-  <span class="k">"nome"</span>: <span class="s">"AcadFlow"</span>,
-  <span class="k">"status"</span>: <span class="s">"publicado"</span>
-}<span class="caret"></span></code></pre>
+            <p>Arquitetura MVC, regras de negócio, autenticação e APIs REST seguras. Experimente o terminal:</p>
+            <div class="term" id="term">
+              <div class="term__bar"><span></span><span></span><span></span><em>nathan@portfolio: ~</em></div>
+              <div class="term__out" id="term-out" aria-live="polite" data-lenis-prevent></div>
+              <form class="term__in" id="term-form" autocomplete="off">
+                <label for="term-input"><b>nathan@portfolio</b>:<i>~</i>$</label>
+                <input id="term-input" type="text" spellcheck="false" autocapitalize="off" enterkeyhint="send" placeholder="digite help" aria-label="Comando do terminal (digite help)">
+              </form>
             </div>
             <div class="tags"><span>PHP</span><span>Laravel</span><span>Eloquent</span><span>Sanctum</span><span>Inertia</span><span>Node.js</span></div>
           </div>

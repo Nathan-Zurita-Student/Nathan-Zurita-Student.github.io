@@ -1,0 +1,50 @@
+<!doctype html>
+<!-- Gera a imagem de prévia (1200×630) usada no LinkedIn/WhatsApp. Ver README. -->
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <title>OG image</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Inter:wght@500;600&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+  <script type="importmap">
+    { "imports": {
+      "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js",
+      "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"
+    } }
+  </script>
+  <style>
+    html, body { margin: 0; width: 1200px; height: 630px; overflow: hidden; background: #07070c; color: #f1f1f7; font-family: Inter, sans-serif; }
+    #webgl { position: fixed; inset: 0; }
+    .wrap { position: relative; z-index: 2; height: 100%; padding: 64px 72px; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between;
+      background: linear-gradient(90deg, rgba(7,7,12,.92) 0%, rgba(7,7,12,.6) 45%, rgba(7,7,12,0) 70%); }
+    .brand { display: flex; align-items: center; gap: 14px; font: 600 20px Inter; }
+    .brand svg { width: 52px; height: 52px; }
+    h1 { margin: 0 0 18px; font: 800 104px/.9 Syne; letter-spacing: -.04em; }
+    h1 span { display: block; -webkit-text-stroke: 2px rgba(255,255,255,.9); color: transparent; }
+    .role { font: 500 26px "JetBrains Mono"; color: #3dd6e6; margin: 0 0 22px; }
+    .tags { display: flex; gap: 10px; }
+    .tags b { font: 500 17px "JetBrains Mono"; padding: 8px 16px; border-radius: 999px; background: rgba(255,255,255,.07); border: 1px solid rgba(255,255,255,.14); }
+    .url { font: 500 19px "JetBrains Mono"; color: #9b9cb3; display: flex; align-items: center; gap: 10px; }
+    .url i { width: 10px; height: 10px; border-radius: 50%; background: #25d366; }
+  </style>
+</head>
+<body>
+  <canvas id="webgl"></canvas>
+  <div class="wrap">
+    <div class="brand">
+      <svg viewBox="0 0 40 40"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#8b7fff"/><stop offset=".55" stop-color="#3dd6e6"/><stop offset="1" stop-color="#ff6ad5"/></linearGradient></defs><rect x="1" y="1" width="38" height="38" rx="11" fill="#11111b" stroke="url(#g)" stroke-width="1.5"/><path d="M12.5 27.5v-15l15 15v-15" fill="none" stroke="url(#g)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><circle cx="27.5" cy="12.5" r="2.2" fill="#fff"/></svg>
+      Portfólio
+    </div>
+    <div>
+      <h1>NATHAN<span>ZURITA</span></h1>
+      <p class="role">&lt;Desenvolvedor Full Stack/&gt;</p>
+      <div class="tags"><b>Laravel</b><b>Vue 3</b><b>Nuxt</b><b>TypeScript</b><b>Three.js</b></div>
+    </div>
+    <div class="url"><i></i>nathan-zurita-student.github.io</div>
+  </div>
+  <script type="module">
+    import { initScene } from '../scene.js';
+    const scene = initScene(document.querySelector('#webgl'), { isMobile: false, reducedMotion: false });
+    if (scene) Object.assign(scene.state, { x: 2.7, y: -.1, z: 0, scale: 1.1, hue: 0, amp: .34 });
+  </script>
+</body>
+</html>

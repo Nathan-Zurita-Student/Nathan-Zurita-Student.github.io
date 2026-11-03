@@ -300,3 +300,236 @@ $('#copy-email').addEventListener('click', async e => {
 });
 
 $('#year').textContent = new Date().getFullYear();
+
+/* ---------- Simulador: cubo arrastável e troca de cor ---------- */
+const sim = $('#sim');
+if (sim) {
+  const cube = $('.cube', sim);
+  const baseSpeed = reducedMotion ? 0 : .35;
+  const rot = { x: -22, y: 0, vy: baseSpeed };
+  let drag = null, visible = false;
+  const loop = () => {
+    if (!drag) {
+      rot.y += rot.vy;
+      rot.vy += (baseSpeed - rot.vy) * .03;
+      rot.x += (-22 - rot.x) * .03;
+    }
+    cube.style.transform = `rotateX(${rot.x}deg) rotateY(${rot.y}deg)`;
+    if (visible) requestAnimationFrame(loop);
+  };
+  new IntersectionObserver(([e]) => {
+    const was = visible;
+    visible = e.isIntersecting;
+    if (visible && !was) requestAnimationFrame(loop);
+  }).observe(sim);
+
+  sim.addEventListener('pointerdown', e => {
+    if (e.target.closest('button')) return;
+    drag = { x: e.clientX, y: e.clientY };
+    sim.setPointerCapture(e.pointerId);
+    sim.classList.add('is-dragging', 'was-dragged');
+  });
+  sim.addEventListener('pointermove', e => {
+    if (!drag) return;
+    const dx = e.clientX - drag.x, dy = e.clientY - drag.y;
+    rot.y += dx * .6;
+    rot.x = Math.max(-80, Math.min(80, rot.x - dy * .6));
+    rot.vy = dx * .6;
+    drag = { x: e.clientX, y: e.clientY };
+  });
+  const endDrag = () => { drag = null; sim.classList.remove('is-dragging'); };
+  sim.addEventListener('pointerup', endDrag);
+  sim.addEventListener('pointercancel', endDrag);
+
+  $$('.swatches button', sim).forEach(btn => btn.addEventListener('click', () => {
+    sim.style.setProperty('--c', btn.dataset.c);
+    $$('.swatches button', sim).forEach(b => {
+      b.classList.toggle('is-active', b === btn);
+      b.setAttribute('aria-pressed', String(b === btn));
+    });
+    rot.vy = 6; // giro rápido ao trocar de cor
+  }));
+}
+
+/* ---------- Terminal interativo ---------- */
+const termOut = $('#term-out'), termForm = $('#term-form'), termInput = $('#term-input');
+if (termOut && termForm) {
+  const WA = 'https://wa.me/5527999299325?text=Ol%C3%A1%20Nathan!%20Vi%20seu%20portf%C3%B3lio%20e%20gostaria%20de%20conversar.';
+  const LINKS = {
+    whatsapp: WA,
+    github: 'https://github.com/Nathan-Zurita-Student',
+    linkedin: 'https://www.linkedin.com/in/nathan-zurita',
+    acadflow: 'https://acadflow.online',
+  };
+  const esc = t => t.replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+  const print = (html = '') => {
+    const p = document.createElement('p');
+    p.innerHTML = html;
+    termOut.appendChild(p);
+    termOut.scrollTop = termOut.scrollHeight;
+  };
+  const open = url => window.open(url, '_blank', 'noopener');
+  const wait = ms => new Promise(r => setTimeout(r, ms));
+  const history = [];
+  let histIdx = 0, busy = false;
+
+  const commands = {
+    help: () => [
+      '<span class="c">Comandos disponíveis:</span>',
+      '  <span class="cmd">whoami</span>        quem sou eu',
+      '  <span class="cmd">projetos</span>      meus trabalhos',
+      '  <span class="cmd">stack</span>         tecnologias que uso',
+      '  <span class="cmd">curl /api/projetos</span>  a mesma lista, em JSON',
+      '  <span class="cmd">contato</span>       como falar comigo',
+      '  <span class="cmd">whatsapp</span> · <span class="cmd">github</span> · <span class="cmd">linkedin</span> · <span class="cmd">acadflow</span>  abre o link',
+      '  <span class="cmd">cv</span>            baixa meu currículo',
+      '  <span class="cmd">email</span>         copia meu e-mail',
+      '  <span class="cmd">blob</span>          muda a cor da cena 3D',
+      '  <span class="cmd">ls</span> · <span class="cmd">cat</span> · <span class="cmd">history</span> · <span class="cmd">clear</span>',
+      '<span class="d">Dica: ↑/↓ navegam no histórico e Tab completa o comando.</span>',
+    ],
+    whoami: () => [
+      '<span class="cmd">Nathan Zurita Barreto</span> — Desenvolvedor Full Stack',
+      'Estagiário na <span class="c">North Sales</span> desde jun/2025 · Ciência da Computação na UVV (6º período)',
+      'PHP/Laravel no backend, Vue 3/Nuxt no frontend e um pé no 3D com Three.js.',
+    ],
+    projetos: () => [
+      '<span class="d">#   projeto               tipo</span>',
+      '01  <span class="cmd">simulador-3d</span>          corporativo · confidencial',
+      '02  <span class="cmd">backoffice</span>            corporativo · confidencial',
+      '03  <span class="cmd">acadflow</span>              full stack · <span class="ok">no ar</span> (digite <span class="cmd">acadflow</span>)',
+      '04  <span class="cmd">uvv-monitor</span>           bot com IA no Telegram',
+      '05  <span class="cmd">student-hub</span>           app desktop (Tauri)',
+      '06  <span class="cmd">raizes-do-amanha</span>      jogo 3D em Unity',
+    ],
+    stack: () => [
+      '<span class="k">backend</span>   PHP · Laravel · Eloquent · Sanctum · Node.js',
+      '<span class="k">frontend</span>  Vue 3 · Nuxt · TypeScript · Pinia · Tailwind',
+      '<span class="k">3d</span>        Three.js · WebGL · Unity · C#',
+      '<span class="k">dados</span>     MySQL · SQLite',
+      '<span class="k">devops</span>    Git · Docker · GitHub Actions',
+    ],
+    curl: args => {
+      if (!/projetos/.test(args.join(' '))) return ['<span class="err">curl: tente</span> <span class="cmd">curl /api/projetos</span>'];
+      const rows = [['Simulador 3D', 'confidencial'], ['Backoffice', 'confidencial'], ['AcadFlow', 'no ar'], ['UVV Monitor', 'ativo'], ['Student Hub', 'concluído'], ['Raízes do Amanhã', 'concluído']];
+      return [
+        `<span class="ok">HTTP/1.1 200 OK</span> <span class="d">· ${20 + Math.round(Math.random() * 60)} ms</span>`,
+        '[',
+        ...rows.map(([n, st], i) => `  { <span class="k">"id"</span>: <span class="n">${i + 1}</span>, <span class="k">"nome"</span>: <span class="s">"${n}"</span>, <span class="k">"status"</span>: <span class="s">"${st}"</span> }${i < rows.length - 1 ? ',' : ''}`),
+        ']',
+      ];
+    },
+    contato: () => [
+      `<span class="k">whatsapp</span>  <a href="${WA}" target="_blank" rel="noopener">(27) 99929-9325</a>`,
+      '<span class="k">email</span>     <a href="mailto:nathanzurita8@gmail.com">nathanzurita8@gmail.com</a>',
+      `<span class="k">linkedin</span>  <a href="${LINKS.linkedin}" target="_blank" rel="noopener">linkedin.com/in/nathan-zurita</a>`,
+    ],
+    cv: () => {
+      const a = document.createElement('a');
+      a.href = 'assets/Curriculo-Nathan-Zurita.pdf';
+      a.download = '';
+      a.click();
+      return ['<span class="ok">Baixando</span> Curriculo-Nathan-Zurita.pdf…'];
+    },
+    email: () => {
+      navigator.clipboard?.writeText('nathanzurita8@gmail.com').then(() => showToast('E-mail copiado!')).catch(() => {});
+      return ['<span class="ok">Copiado:</span> nathanzurita8@gmail.com'];
+    },
+    blob: () => {
+      if (!scene) return ['<span class="err">A cena 3D não está disponível neste dispositivo.</span>'];
+      scene.state.hue += .27;
+      const amp = scene.state.amp;
+      scene.state.amp = amp + .35;
+      setTimeout(() => { scene.state.amp = amp; }, 700);
+      return ['<span class="ok">Blob recolorido.</span> <span class="d">Roda de novo para outra cor.</span>'];
+    },
+    ls: () => ['<span class="k">projetos/</span>  <span class="k">stack/</span>  sobre.txt  contato.txt  curriculo.pdf'],
+    cat: args => {
+      const f = args[0] || '';
+      if (f.startsWith('sobre')) return commands.whoami();
+      if (f.startsWith('contato')) return commands.contato();
+      if (f.startsWith('curriculo')) return ['<span class="d">É um PDF — use</span> <span class="cmd">cv</span> <span class="d">para baixar.</span>'];
+      return [`<span class="err">cat: ${esc(f || '(vazio)')}: arquivo não encontrado</span>`];
+    },
+    pwd: () => ['/home/nathan/portfolio'],
+    date: () => [new Date().toLocaleString('pt-BR')],
+    echo: args => [esc(args.join(' '))],
+    history: () => history.map((h, i) => `<span class="d">${String(i + 1).padStart(3)}</span>  ${esc(h)}`),
+    clear: () => { termOut.innerHTML = ''; return []; },
+    exit: () => ['<span class="d">Não dá pra sair: o portfólio é bom demais.</span>'],
+    sudo: async args => {
+      if (args.join(' ') !== 'contratar') return ['<span class="err">Permissão negada.</span> <span class="d">Tente</span> <span class="cmd">sudo contratar</span>'];
+      print('[sudo] senha para recrutador: ********');
+      await wait(600);
+      print('<span class="ok">Acesso concedido.</span> Ótima escolha.');
+      await wait(500);
+      print('Abrindo o WhatsApp…');
+      await wait(400);
+      open(WA);
+      return [];
+    },
+  };
+  for (const k of ['whatsapp', 'github', 'linkedin', 'acadflow']) {
+    commands[k] = () => { open(LINKS[k]); return [`<span class="ok">Abrindo</span> ${LINKS[k].replace(/^https:\/\/(www\.)?/, '')}…`]; };
+  }
+  const aliases = { ajuda: 'help', sobre: 'whoami', skills: 'stack', zap: 'whatsapp', curriculo: 'cv', limpar: 'clear', cls: 'clear' };
+
+  async function run(raw) {
+    const line = raw.trim();
+    print(`<span class="u">nathan@portfolio</span>:<span class="k">~</span>$ <span class="cmd">${esc(line)}</span>`);
+    if (!line) return;
+    history.push(line);
+    histIdx = history.length;
+    const [name, ...args] = line.split(/\s+/);
+    const key = aliases[name.toLowerCase()] || name.toLowerCase();
+    const fn = commands[key];
+    if (!fn) { print(`<span class="err">comando não encontrado: ${esc(name)}</span> <span class="d">— digite</span> <span class="cmd">help</span>`); return; }
+    busy = true;
+    try { (await fn(args)).forEach(l => print(l)); } finally { busy = false; }
+  }
+
+  termForm.addEventListener('submit', e => {
+    e.preventDefault();
+    if (busy) return;
+    const v = termInput.value;
+    termInput.value = '';
+    run(v);
+  });
+  termInput.addEventListener('keydown', e => {
+    if (e.key === 'ArrowUp' || e.key === 'ArrowDown') {
+      if (!history.length) return;
+      e.preventDefault();
+      histIdx = Math.max(0, Math.min(history.length, histIdx + (e.key === 'ArrowUp' ? -1 : 1)));
+      termInput.value = history[histIdx] || '';
+    } else if (e.key === 'Tab') {
+      const v = termInput.value.trim().toLowerCase();
+      if (!v) return;
+      const match = Object.keys(commands).find(c => c.startsWith(v));
+      if (match) { e.preventDefault(); termInput.value = match + (match === 'curl' ? ' /api/projetos' : ''); }
+    }
+  });
+  $('#term').addEventListener('click', e => {
+    if (!e.target.closest('a') && !getSelection().toString()) termInput.focus({ preventScroll: true });
+  });
+
+  print('<span class="c">Bem-vindo!</span> Este terminal funciona de verdade.');
+  print('Digite <span class="cmd">help</span> para ver os comandos.');
+
+  // Demonstração: digita "whoami" sozinho na primeira vez que o terminal aparece
+  const demo = new IntersectionObserver(async ([e]) => {
+    if (!e.isIntersecting) return;
+    demo.disconnect();
+    if (reducedMotion || termInput.value || history.length) return;
+    await wait(700);
+    for (const ch of 'whoami') {
+      if (document.activeElement === termInput) return;
+      termInput.value += ch;
+      await wait(90);
+    }
+    await wait(300);
+    if (document.activeElement === termInput && termInput.value !== 'whoami') return;
+    termInput.value = '';
+    run('whoami');
+  }, { threshold: .6 });
+  demo.observe(termOut);
+}

@@ -20,3 +20,13 @@ npx http-server . -p 5500
 2. Envie estes arquivos para a branch `main`.
 3. Em **Settings → Pages**, escolha `Deploy from a branch` → `main` / `root`.
 4. O site fica em `https://nathan-zurita-student.github.io`.
+
+## Imagem de prévia (LinkedIn/WhatsApp)
+
+`assets/og-image.jpg` é gerada a partir de `tools/og-image.html`. Com o servidor local rodando:
+
+```bash
+"/c/Program Files/Google/Chrome/Application/chrome.exe" --headless=new --enable-unsafe-swiftshader --use-angle=swiftshader --hide-scrollbars --window-size=1200,630 --virtual-time-budget=9000 --screenshot=assets/og-image.png http://localhost:5500/tools/og-image.html
+```
+
+Depois converta para JPG (abaixo de 300 KB, por causa do WhatsApp). Se o domínio mudar, atualize as URLs `og:*` no `index.html`.

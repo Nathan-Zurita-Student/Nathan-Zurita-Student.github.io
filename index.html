@@ -1,0 +1,362 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Nathan Zurita | Desenvolvedor Full Stack</title>
+  <meta name="description" content="Portfólio de Nathan Zurita Barreto, desenvolvedor Full Stack com PHP, Laravel, Vue 3, Nuxt, TypeScript e Three.js.">
+  <meta name="theme-color" content="#07070c">
+  <meta property="og:title" content="Nathan Zurita | Desenvolvedor Full Stack">
+  <meta property="og:description" content="Laravel, Vue 3, Nuxt, TypeScript e 3D na web. Veja meus projetos e experiência.">
+  <meta property="og:type" content="website">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><defs><linearGradient id='g' x1='0' y1='0' x2='1' y2='1'><stop offset='0' stop-color='%238b7fff'/><stop offset='1' stop-color='%233dd6e6'/></linearGradient></defs><rect width='64' height='64' rx='16' fill='url(%23g)'/><text x='50%' y='55%' text-anchor='middle' dominant-baseline='middle' font-family='Arial' font-weight='900' font-size='26' fill='white'>NZ</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js",
+        "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"
+      }
+    }
+  </script>
+</head>
+<body class="is-loading">
+  <!-- Preloader -->
+  <div class="loader" id="loader" aria-hidden="true">
+    <div class="loader__inner">
+      <div class="loader__logo">NZ</div>
+      <div class="loader__bar"><span id="loader-bar"></span></div>
+      <div class="loader__count"><span id="loader-count">0</span>%</div>
+    </div>
+  </div>
+
+  <canvas id="webgl" aria-hidden="true"></canvas>
+  <div class="grain" aria-hidden="true"></div>
+  <div class="cursor" aria-hidden="true"><span class="cursor__dot"></span><span class="cursor__ring"><em>ver</em></span></div>
+
+  <header class="nav" id="topo">
+    <div class="container nav__inner">
+      <a href="#inicio" class="logo" aria-label="Início"><span class="logo__mark">NZ</span><span class="logo__text">nathan<b>.</b>zurita</span></a>
+      <nav class="nav__links" id="menu" aria-label="Principal">
+        <a href="#sobre"><i>01</i>Sobre</a>
+        <a href="#experiencia"><i>02</i>Trajetória</a>
+        <a href="#projetos"><i>03</i>Projetos</a>
+        <a href="#habilidades"><i>04</i>Stack</a>
+        <a href="#contato"><i>05</i>Contato</a>
+      </nav>
+      <a class="nav__cta magnetic" href="https://wa.me/5527999299325?text=Ol%C3%A1%20Nathan!%20Vi%20seu%20portf%C3%B3lio%20e%20gostaria%20de%20conversar." target="_blank" rel="noopener">
+        <span class="live"></span> Vamos conversar
+      </a>
+      <button class="nav__burger" id="menu-toggle" type="button" aria-label="Abrir menu" aria-expanded="false" aria-controls="menu"><span></span><span></span></button>
+    </div>
+  </header>
+
+  <main>
+    <!-- HERO -->
+    <section class="hero" id="inicio" data-scene="hero">
+      <div class="container hero__inner">
+        <p class="hero__kicker reveal-up"><span class="live"></span> Disponível para novas oportunidades · Cariacica, ES</p>
+        <h1 class="hero__title" aria-label="Nathan Zurita">
+          <span class="line"><span class="split">NATHAN</span></span>
+          <span class="line line--outline"><span class="split">ZURITA</span></span>
+        </h1>
+        <div class="hero__bottom">
+          <p class="hero__role reveal-up">
+            <span class="mono">&lt;</span><span id="scramble">Desenvolvedor Full Stack</span><span class="mono">/&gt;</span>
+          </p>
+          <p class="hero__lead reveal-up">Crio aplicações web de ponta a ponta — APIs robustas em <b>Laravel</b>, interfaces fluidas em <b>Vue &amp; Nuxt</b> e experiências <b>3D</b> no navegador.</p>
+          <div class="hero__cta reveal-up">
+            <a class="btn btn--primary magnetic" href="#projetos"><span>Ver projetos</span> <svg viewBox="0 0 24 24"><path d="M7 17 17 7M8 7h9v9"/></svg></a>
+            <a class="btn btn--wa magnetic" href="https://wa.me/5527999299325?text=Ol%C3%A1%20Nathan!%20Vi%20seu%20portf%C3%B3lio%20e%20gostaria%20de%20conversar." target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" class="fill"><path d="M17.5 14.4c-.3-.1-1.8-.9-2-1-.3-.1-.5-.1-.7.1-.2.3-.8 1-.9 1.2-.2.2-.3.2-.6.1-.3-.1-1.3-.5-2.4-1.5-.9-.8-1.5-1.8-1.7-2.1-.2-.3 0-.5.1-.6l.4-.5c.2-.2.2-.3.3-.5.1-.2 0-.4 0-.5l-.9-2.2c-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.5s1.1 2.9 1.2 3.1c.1.2 2.1 3.2 5.1 4.5.7.3 1.3.5 1.7.6.7.2 1.4.2 1.9.1.6-.1 1.8-.7 2-1.4.2-.7.2-1.3.2-1.4-.1-.1-.3-.2-.6-.4zM12 21.8c-1.8 0-3.5-.5-5-1.4l-.4-.2-3.7 1 1-3.6-.2-.4A9.8 9.8 0 1 1 12 21.8zm8.4-18.2A11.8 11.8 0 0 0 1.7 17.8L0 24l6.3-1.7A11.8 11.8 0 0 0 24 12c0-3.2-1.2-6.1-3.6-8.4z"/></svg>
+              <span>WhatsApp</span>
+            </a>
+            <a class="btn btn--ghost magnetic" href="assets/Curriculo-Nathan-Zurita.pdf" download><span>Currículo</span> <svg viewBox="0 0 24 24"><path d="M12 4v11m0 0-4-4m4 4 4-4M5 20h14"/></svg></a>
+          </div>
+        </div>
+      </div>
+      <a class="scroll-hint" href="#sobre" aria-label="Rolar para baixo"><span></span>scroll</a>
+    </section>
+
+    <!-- MARQUEE -->
+    <div class="marquee" aria-hidden="true">
+      <div class="marquee__row">
+        <div class="marquee__track">
+          <span>Laravel</span><i>✦</i><span>Vue 3</span><i>✦</i><span>Nuxt</span><i>✦</i><span>TypeScript</span><i>✦</i><span>Three.js</span><i>✦</i><span>PHP</span><i>✦</i><span>MySQL</span><i>✦</i><span>Docker</span><i>✦</i><span>Tailwind</span><i>✦</i><span>APIs REST</span><i>✦</i>
+          <span>Laravel</span><i>✦</i><span>Vue 3</span><i>✦</i><span>Nuxt</span><i>✦</i><span>TypeScript</span><i>✦</i><span>Three.js</span><i>✦</i><span>PHP</span><i>✦</i><span>MySQL</span><i>✦</i><span>Docker</span><i>✦</i><span>Tailwind</span><i>✦</i><span>APIs REST</span><i>✦</i>
+        </div>
+      </div>
+    </div>
+
+    <!-- SOBRE -->
+    <section class="section" id="sobre" data-scene="about">
+      <div class="container about">
+        <p class="kicker"><i>01</i> Sobre mim</p>
+        <p class="statement" id="statement">Sou desenvolvedor Full Stack e estudante de Ciência da Computação na UVV. Há mais de um ano transformo regras de negócio em sistemas reais na North Sales — de ERPs e CRMs a um simulador 3D de produtos. Gosto de código limpo, interfaces que dão vontade de usar e de resolver problemas de verdade.</p>
+        <div class="stats">
+          <div class="stat"><strong><span data-count="1">0</span>+</strong><span>ano desenvolvendo<br>profissionalmente</span></div>
+          <div class="stat"><strong><span data-count="6">0</span></strong><span>projetos em<br>destaque</span></div>
+          <div class="stat"><strong><span data-count="6">0</span>º</strong><span>período de Ciência<br>da Computação</span></div>
+          <div class="stat"><strong><span data-count="15">0</span>+</strong><span>tecnologias<br>no dia a dia</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- EXPERIÊNCIA -->
+    <section class="section" id="experiencia" data-scene="exp">
+      <div class="container">
+        <p class="kicker"><i>02</i> Trajetória</p>
+        <h2 class="title">Experiência <em>&amp;</em> formação</h2>
+        <div class="timeline">
+          <div class="timeline__line"><span></span></div>
+          <article class="job glass">
+            <div class="job__meta"><span class="pill pill--live"><span class="live"></span>Atual</span><span class="mono">Jun/2025 — hoje</span></div>
+            <h3>Estagiário de Desenvolvimento Full Stack</h3>
+            <p class="job__company">North Sales</p>
+            <ul>
+              <li>Desenvolvimento ponta a ponta de sistemas ERP, CRM, e-commerce e dashboards.</li>
+              <li>Backend em PHP/Laravel: Eloquent, Migrations, Controllers, autenticação e Form Requests.</li>
+              <li>Frontend com Vue 3, Nuxt e Tailwind CSS; integração de APIs REST e MySQL.</li>
+              <li>Participação no desenvolvimento de um simulador 3D de produtos e seu backoffice.</li>
+              <li>Docker, Git/Bitbucket com Pull Requests e rituais ágeis.</li>
+            </ul>
+          </article>
+          <article class="job glass">
+            <div class="job__meta"><span class="mono">Mai/2024 — Nov/2024</span></div>
+            <h3>Estagiário de Suporte Técnico</h3>
+            <p class="job__company">Vila Soluções</p>
+            <ul>
+              <li>Suporte a usuários, diagnóstico de incidentes e resolução de problemas de hardware e software.</li>
+              <li>Instalação, configuração e manutenção de sistemas e equipamentos de TI.</li>
+            </ul>
+          </article>
+          <article class="job glass job--edu">
+            <div class="job__meta"><span class="pill">Formação</span><span class="mono">Fev/2024 — Dez/2027</span></div>
+            <h3>Bacharelado em Ciência da Computação</h3>
+            <p class="job__company">Universidade Vila Velha (UVV) · 6º período</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROJETOS (scroll horizontal no desktop) -->
+    <section class="work" id="projetos" data-scene="work">
+      <div class="work__pin">
+        <div class="container work__head">
+          <div>
+            <p class="kicker"><i>03</i> Trabalhos selecionados</p>
+            <h2 class="title">Projetos</h2>
+          </div>
+          <p class="work__count mono"><span id="work-current">01</span> / 06</p>
+        </div>
+        <div class="work__track" id="work-track">
+
+          <article class="card tilt" data-cursor="ver">
+            <div class="card__art art-sim">
+              <div class="cube"><div class="f f1"></div><div class="f f2"></div><div class="f f3"></div><div class="f f4"></div><div class="f f5"></div><div class="f f6"></div></div>
+              <div class="swatches"><i></i><i></i><i></i><i></i><i></i></div>
+            </div>
+            <div class="card__body">
+              <div class="card__top"><span class="mono">01</span><span class="pill pill--lock">🔒 Corporativo · North Sales</span></div>
+              <h3>Simulador 3D de Produtos</h3>
+              <p>Plataforma white-label em que o cliente final personaliza um produto físico em 3D, em tempo real, antes de pedir orçamento. O mesmo frontend atende qualquer catálogo cadastrado.</p>
+              <ul class="card__list">
+                <li>Renderização 3D interativa com Three.js</li>
+                <li>Camada BFF no servidor: credenciais nunca chegam ao navegador</li>
+                <li>Adapters e tipos de domínio isolando a UI da API</li>
+              </ul>
+              <div class="tags"><span>Nuxt 4</span><span>Vue 3</span><span>TypeScript</span><span>Three.js</span><span>Tailwind</span><span>Vitest</span></div>
+              <p class="card__note">Código proprietário — detalhes omitidos por confidencialidade.</p>
+            </div>
+          </article>
+
+          <article class="card tilt" data-cursor="ver">
+            <div class="card__art art-bo">
+              <div class="dash">
+                <div class="dash__side"><i></i><i></i><i></i><i></i></div>
+                <div class="dash__main">
+                  <div class="dash__kpis"><b></b><b></b><b></b></div>
+                  <div class="dash__chart"><i style="--h:40%"></i><i style="--h:65%"></i><i style="--h:50%"></i><i style="--h:85%"></i><i style="--h:60%"></i><i style="--h:95%"></i><i style="--h:70%"></i></div>
+                  <div class="dash__rows"><i></i><i></i><i></i></div>
+                </div>
+              </div>
+            </div>
+            <div class="card__body">
+              <div class="card__top"><span class="mono">02</span><span class="pill pill--lock">🔒 Corporativo · North Sales</span></div>
+              <h3>Backoffice do Simulador</h3>
+              <p>Painel administrativo e API que alimentam o simulador: gestão de catálogo, produtos e templates visuais, com regras de publicação que só liberam um item quando todos os critérios estão completos.</p>
+              <ul class="card__list">
+                <li>API REST autenticada com Laravel Sanctum</li>
+                <li>SPA administrativa com Inertia.js e rotas tipadas</li>
+                <li>Pré-visualização 3D da cena dentro do painel</li>
+              </ul>
+              <div class="tags"><span>Laravel 13</span><span>PHP 8.4</span><span>Inertia</span><span>Vue 3</span><span>Tailwind v4</span><span>MySQL</span><span>Pest</span></div>
+              <p class="card__note">Código proprietário — detalhes omitidos por confidencialidade.</p>
+            </div>
+          </article>
+
+          <article class="card tilt" data-cursor="ver">
+            <div class="card__art art-acad">
+              <div class="kanban"><div><i></i><i></i><i></i></div><div><i class="drag"></i><i></i></div><div><i></i></div></div>
+            </div>
+            <div class="card__body">
+              <div class="card__top"><span class="mono">03</span><span class="pill">Pessoal · Full Stack</span></div>
+              <h3>AcadFlow</h3>
+              <p>Gestão de projetos para grupos acadêmicos: Kanban com arrastar e soltar, progresso da equipe, reuniões, arquivos e notificações em tempo real via WebSockets.</p>
+              <ul class="card__list">
+                <li>API com Sanctum, Policies, Form Requests e Resources</li>
+                <li>Tempo real com Laravel Reverb</li>
+                <li>Dashboards com ApexCharts e testes com Pest</li>
+              </ul>
+              <div class="tags"><span>Laravel 13</span><span>Vue 3</span><span>TypeScript</span><span>Pinia</span><span>Inertia</span><span>Docker</span></div>
+            </div>
+          </article>
+
+          <article class="card tilt" data-cursor="ver">
+            <div class="card__art art-bot">
+              <div class="chat"><span class="b in">Quais provas tenho essa semana?</span><span class="b out">📚 2 provas e 1 trabalho até sexta. Quer que eu crie lembretes?</span><span class="b in">Sim!</span></div>
+            </div>
+            <div class="card__body">
+              <div class="card__top"><span class="mono">04</span><span class="pill">Pessoal · Automação + IA</span></div>
+              <h3>UVV Monitor</h3>
+              <p>Assistente acadêmico que coleta dados do portal da faculdade, AVA, Gmail e Google Calendar e conversa em linguagem natural pelo Telegram, com GPT usando ferramentas.</p>
+              <ul class="card__list">
+                <li>Coleta read-only com Playwright e falha isolada por fonte</li>
+                <li>Execução agendada no GitHub Actions</li>
+                <li>Deduplicação por hash e priorização de prazos</li>
+              </ul>
+              <div class="tags"><span>Node.js</span><span>TypeScript</span><span>Playwright</span><span>Google APIs</span><span>OpenAI</span></div>
+              <a class="card__link" href="https://github.com/Nathan-Zurita-Student/uvv-monitor" target="_blank" rel="noopener">Ver código ↗</a>
+            </div>
+          </article>
+
+          <article class="card tilt" data-cursor="ver">
+            <div class="card__art art-hub">
+              <div class="cal"><b></b><b></b><b class="on"></b><b></b><b></b><b></b><b class="warn"></b><b></b><b></b><b></b><b></b><b class="on"></b><b></b><b></b><b></b><b class="on"></b><b></b><b></b><b></b><b></b><b></b></div>
+            </div>
+            <div class="card__body">
+              <div class="card__top"><span class="mono">05</span><span class="pill">Pessoal · Desktop</span></div>
+              <h3>UVV Student Hub</h3>
+              <p>App desktop local-first para organizar disciplinas, atividades, provas e calendário. Funciona offline e sincroniza com o UVV Monitor sem duplicar tarefas.</p>
+              <ul class="card__list">
+                <li>Tauri (Rust) + versão portátil em Electron</li>
+                <li>SQLite local e credenciais criptografadas</li>
+                <li>Prazos urgentes, tema claro/escuro e assistente local</li>
+              </ul>
+              <div class="tags"><span>Vue 3</span><span>TypeScript</span><span>Tauri</span><span>Electron</span><span>SQLite</span></div>
+            </div>
+          </article>
+
+          <article class="card tilt" data-cursor="ver">
+            <div class="card__art art-game">
+              <div class="forest"><i></i><i></i><i></i><i></i><i></i></div>
+            </div>
+            <div class="card__body">
+              <div class="card__top"><span class="mono">06</span><span class="pill">Acadêmico · Jogo 3D</span></div>
+              <h3>Raízes do Amanhã</h3>
+              <p>Jogo em terceira pessoa numa floresta bioluminescente que tomou ruínas industriais. Cinco fases para coletar EcoCélulas e restaurar o ecossistema.</p>
+              <ul class="card__list">
+                <li>Inimigo com patrulha e perseguição via NavMesh</li>
+                <li>Cenários procedurais e física com Rigidbody</li>
+                <li>Game Design Document e build para Windows</li>
+              </ul>
+              <div class="tags"><span>Unity 6</span><span>C#</span><span>URP</span><span>NavMesh</span></div>
+            </div>
+          </article>
+
+        </div>
+        <div class="container work__progress"><span id="work-bar"></span></div>
+      </div>
+    </section>
+
+    <!-- STACK -->
+    <section class="section" id="habilidades" data-scene="skills">
+      <div class="container">
+        <p class="kicker"><i>04</i> Stack</p>
+        <h2 class="title">Ferramentas <em>que domino</em></h2>
+        <div class="bento">
+          <div class="bento__item bento__item--big glass">
+            <span class="bento__ico">⚙️</span>
+            <h3>Backend &amp; APIs</h3>
+            <p>Arquitetura MVC, regras de negócio, autenticação e APIs REST seguras.</p>
+            <div class="tags"><span>PHP</span><span>Laravel</span><span>Eloquent</span><span>Sanctum</span><span>Inertia</span><span>Node.js</span></div>
+          </div>
+          <div class="bento__item glass">
+            <span class="bento__ico">🎨</span>
+            <h3>Frontend</h3>
+            <div class="tags"><span>Vue 3</span><span>Nuxt</span><span>TypeScript</span><span>Pinia</span><span>Tailwind</span><span>React</span></div>
+          </div>
+          <div class="bento__item glass">
+            <span class="bento__ico">🧊</span>
+            <h3>3D &amp; Jogos</h3>
+            <div class="tags"><span>Three.js</span><span>WebGL</span><span>Unity</span><span>C#</span></div>
+          </div>
+          <div class="bento__item glass">
+            <span class="bento__ico">🗄️</span>
+            <h3>Dados</h3>
+            <div class="tags"><span>MySQL</span><span>SQL</span><span>SQLite</span><span>Modelagem</span></div>
+          </div>
+          <div class="bento__item glass">
+            <span class="bento__ico">🚀</span>
+            <h3>DevOps &amp; fluxo</h3>
+            <div class="tags"><span>Git</span><span>Docker</span><span>GitHub Actions</span><span>Bitbucket</span><span>Scrum</span></div>
+          </div>
+          <div class="bento__item bento__item--wide glass">
+            <span class="bento__ico">🧪</span>
+            <h3>Qualidade &amp; automação</h3>
+            <div class="tags"><span>Pest</span><span>Vitest</span><span>Playwright</span><span>Python</span><span>Tauri</span><span>Electron</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTATO -->
+    <section class="section contact" id="contato" data-scene="contact">
+      <div class="container">
+        <p class="kicker"><i>05</i> Contato</p>
+        <h2 class="contact__title">
+          <span class="line"><span class="split">Vamos criar</span></span>
+          <span class="line"><span class="split grad">algo incrível?</span></span>
+        </h2>
+        <p class="contact__lead">Estou aberto a vagas de estágio e júnior como desenvolvedor Full Stack. A forma mais rápida de falar comigo é pelo WhatsApp.</p>
+        <div class="contact__actions">
+          <a class="btn btn--wa btn--xl magnetic" href="https://wa.me/5527999299325?text=Ol%C3%A1%20Nathan!%20Vi%20seu%20portf%C3%B3lio%20e%20gostaria%20de%20conversar." target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" class="fill"><path d="M17.5 14.4c-.3-.1-1.8-.9-2-1-.3-.1-.5-.1-.7.1-.2.3-.8 1-.9 1.2-.2.2-.3.2-.6.1-.3-.1-1.3-.5-2.4-1.5-.9-.8-1.5-1.8-1.7-2.1-.2-.3 0-.5.1-.6l.4-.5c.2-.2.2-.3.3-.5.1-.2 0-.4 0-.5l-.9-2.2c-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.5s1.1 2.9 1.2 3.1c.1.2 2.1 3.2 5.1 4.5.7.3 1.3.5 1.7.6.7.2 1.4.2 1.9.1.6-.1 1.8-.7 2-1.4.2-.7.2-1.3.2-1.4-.1-.1-.3-.2-.6-.4zM12 21.8c-1.8 0-3.5-.5-5-1.4l-.4-.2-3.7 1 1-3.6-.2-.4A9.8 9.8 0 1 1 12 21.8zm8.4-18.2A11.8 11.8 0 0 0 1.7 17.8L0 24l6.3-1.7A11.8 11.8 0 0 0 24 12c0-3.2-1.2-6.1-3.6-8.4z"/></svg>
+            <span>(27) 99929-9325</span>
+          </a>
+          <a class="btn btn--ghost btn--xl magnetic" href="mailto:nathanzurita8@gmail.com"><span>nathanzurita8@gmail.com</span></a>
+        </div>
+        <ul class="socials">
+          <li><a href="https://www.linkedin.com/in/nathan-zurita" target="_blank" rel="noopener" class="hover-line">LinkedIn ↗</a></li>
+          <li><a href="https://github.com/Nathan-Zurita-Student" target="_blank" rel="noopener" class="hover-line">GitHub ↗</a></li>
+          <li><a href="assets/Curriculo-Nathan-Zurita.pdf" download class="hover-line">Currículo PDF ↓</a></li>
+          <li><button type="button" id="copy-email" class="hover-line" data-email="nathanzurita8@gmail.com">Copiar e-mail ⧉</button></li>
+        </ul>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer__inner">
+      <p>© <span id="year">2026</span> Nathan Zurita Barreto</p>
+      <p class="mono">Feito com Three.js, GSAP &amp; muito café ☕</p>
+      <a href="#inicio" class="hover-line">Voltar ao topo ↑</a>
+    </div>
+  </footer>
+
+  <a class="wa-fab" href="https://wa.me/5527999299325?text=Ol%C3%A1%20Nathan!%20Vi%20seu%20portf%C3%B3lio%20e%20gostaria%20de%20conversar." target="_blank" rel="noopener" aria-label="Falar no WhatsApp">
+    <svg viewBox="0 0 24 24" class="fill"><path d="M17.5 14.4c-.3-.1-1.8-.9-2-1-.3-.1-.5-.1-.7.1-.2.3-.8 1-.9 1.2-.2.2-.3.2-.6.1-.3-.1-1.3-.5-2.4-1.5-.9-.8-1.5-1.8-1.7-2.1-.2-.3 0-.5.1-.6l.4-.5c.2-.2.2-.3.3-.5.1-.2 0-.4 0-.5l-.9-2.2c-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.5s1.1 2.9 1.2 3.1c.1.2 2.1 3.2 5.1 4.5.7.3 1.3.5 1.7.6.7.2 1.4.2 1.9.1.6-.1 1.8-.7 2-1.4.2-.7.2-1.3.2-1.4-.1-.1-.3-.2-.6-.4zM12 21.8c-1.8 0-3.5-.5-5-1.4l-.4-.2-3.7 1 1-3.6-.2-.4A9.8 9.8 0 1 1 12 21.8zm8.4-18.2A11.8 11.8 0 0 0 1.7 17.8L0 24l6.3-1.7A11.8 11.8 0 0 0 24 12c0-3.2-1.2-6.1-3.6-8.4z"/></svg>
+    <span class="wa-fab__tip">Fale comigo!</span>
+  </a>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
+  <script type="module" src="main.js"></script>
+</body>
+</html>

@@ -99,15 +99,12 @@ burger.addEventListener('click', () => {
   burger.setAttribute('aria-expanded', String(open));
 });
 
-/* ---------- Nav: esconder ao descer, link ativo ---------- */
+/* ---------- Nav fixa: fundo ao rolar, link ativo ---------- */
 const nav = $('.nav'), fab = $('.wa-fab');
-let lastY = 0;
 function onScroll() {
   const y = scrollY;
   nav.classList.toggle('is-scrolled', y > 20);
-  nav.classList.toggle('is-hidden', y > 400 && y > lastY && !menu.classList.contains('is-open'));
   fab.classList.toggle('is-visible', y > innerHeight * .6);
-  lastY = y;
 }
 addEventListener('scroll', onScroll, { passive: true });
 onScroll();
@@ -239,7 +236,7 @@ function intro() {
   const tl = gsap.timeline({ delay: .35 });
   tl.from('.hero__title .char', { yPercent: 115, rotate: 8, duration: 1.4, stagger: .045, ease: 'expo.out' })
     .from('.reveal-up', { y: 30, opacity: 0, duration: 1, stagger: .1, ease: 'expo.out' }, '-=1')
-    .from('.nav', { y: -40, opacity: 0, duration: .9, ease: 'expo.out' }, '-=1')
+    .from('.nav__inner', { y: -24, opacity: 0, duration: .9, ease: 'expo.out', clearProps: 'transform,opacity' }, '-=1')
     .from('.scroll-hint', { opacity: 0, duration: .8 }, '-=.4');
   if (scene) gsap.from(scene.state, { scale: .2, duration: 2.2, ease: 'expo.out' });
 }

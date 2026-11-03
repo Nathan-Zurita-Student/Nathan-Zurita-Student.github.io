@@ -295,6 +295,7 @@ function showToast(msg) {
 }
 $('#copy-email').addEventListener('click', async e => {
   const email = e.currentTarget.dataset.email;
+  window.trackEvent?.('copiar-email');
   try { await navigator.clipboard.writeText(email); showToast('E-mail copiado!'); }
   catch { showToast(email); }
 });
@@ -335,6 +336,7 @@ if (cform) {
       if (!res.ok) throw new Error(res.status);
       cform.reset();
       setStatus('Mensagem enviada! Respondo o quanto antes.', 'ok');
+      window.trackEvent?.('formulario-enviado');
     } catch {
       setStatus('Não consegui enviar agora. Tente pelo WhatsApp ou e-mail.', 'err');
     } finally {
@@ -527,6 +529,7 @@ if (termOut && termForm) {
     const key = aliases[name.toLowerCase()] || name.toLowerCase();
     const fn = commands[key];
     if (!fn) { print(`<span class="err">comando não encontrado: ${esc(name)}</span> <span class="d">— digite</span> <span class="cmd">help</span>`); return; }
+    window.trackEvent?.('terminal-' + key);
     busy = true;
     try { (await fn(args)).forEach(l => print(l)); } finally { busy = false; }
   }

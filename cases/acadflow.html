@@ -1,0 +1,214 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AcadFlow · Case | Nathan Zurita</title>
+  <meta name="description" content="Case do AcadFlow: plataforma full stack de gestão de trabalhos em grupo, com Kanban em tempo real, plano de tarefas por IA e Raio-X de contribuição. Laravel 13 + Vue 3.">
+  <meta name="theme-color" content="#07070c">
+  <meta property="og:title" content="AcadFlow · Case | Nathan Zurita">
+  <meta property="og:description" content="Do problema à arquitetura: como construí sozinho uma plataforma de gestão de trabalhos em grupo com Laravel 13, Vue 3 e tempo real.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://nathan-zurita-student.github.io/cases/acadflow.html">
+  <meta property="og:image" content="https://nathan-zurita-student.github.io/assets/og-image.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><defs><linearGradient id='g' x1='0' y1='0' x2='1' y2='1'><stop offset='0' stop-color='%238b7fff'/><stop offset='1' stop-color='%233dd6e6'/></linearGradient></defs><rect width='64' height='64' rx='16' fill='url(%23g)'/><text x='50%' y='55%' text-anchor='middle' dominant-baseline='middle' font-family='Arial' font-weight='900' font-size='26' fill='white'>NZ</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../style.css">
+  <link rel="stylesheet" href="case.css">
+  <script type="importmap">
+    { "imports": {
+      "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js",
+      "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"
+    } }
+  </script>
+</head>
+<body data-hue="0.2">
+  <svg class="sprite" aria-hidden="true">
+    <defs><linearGradient id="nz-grad" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#8b7fff"/><stop offset=".55" stop-color="#3dd6e6"/><stop offset="1" stop-color="#ff6ad5"/></linearGradient></defs>
+    <symbol id="logo-mark" viewBox="0 0 40 40"><rect x="1" y="1" width="38" height="38" rx="11" fill="#11111b" stroke="url(#nz-grad)" stroke-width="1.5"/><path d="M12.5 27.5v-15l15 15v-15" fill="none" stroke="url(#nz-grad)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><circle cx="27.5" cy="12.5" r="2.2" fill="#fff"/></symbol>
+    <symbol id="i-back" viewBox="0 0 24 24"><path d="M19 12H5m0 0 6-6m-6 6 6 6"/></symbol>
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M7 17 17 7M8 7h9v9"/></symbol>
+    <symbol id="i-right" viewBox="0 0 24 24"><path d="M5 12h14m0 0-6-6m6 6-6 6"/></symbol>
+    <symbol id="i-down" viewBox="0 0 24 24"><path d="M12 5v14m0 0-6-6m6 6 6-6"/></symbol>
+    <symbol id="i-globe" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></symbol>
+    <symbol id="i-kanban" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M9 4v16M15 4v16M5.5 8h1M11.5 8h1M17.5 8h1M5.5 11h1"/></symbol>
+    <symbol id="i-spark" viewBox="0 0 24 24"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z"/><path d="M19 15l.8 2.2L22 18l-2.2.8L19 21l-.8-2.2L16 18l2.2-.8z"/></symbol>
+    <symbol id="i-chart" viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></symbol>
+    <symbol id="i-timer" viewBox="0 0 24 24"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2.5 2.5M9 2h6"/></symbol>
+    <symbol id="i-bell" viewBox="0 0 24 24"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></symbol>
+    <symbol id="i-card" viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20M6 15h4"/></symbol>
+    <symbol id="i-telegram" viewBox="0 0 24 24"><path d="M21.9 4.3 18.7 19.4c-.2 1-.9 1.3-1.7.8l-4.8-3.6-2.3 2.2c-.3.3-.5.5-1 .5l.3-4.9 8.9-8c.4-.3-.1-.5-.6-.2L6.5 13.1l-4.7-1.5c-1-.3-1-1 .2-1.5L20.6 3c.9-.3 1.6.2 1.3 1.3z"/></symbol>
+  </svg>
+
+  <canvas id="webgl" aria-hidden="true"></canvas>
+  <div class="grain" aria-hidden="true"></div>
+
+  <header class="nav">
+    <div class="container nav__inner">
+      <a href="../#inicio" class="logo" aria-label="Nathan Zurita, voltar ao início"><svg class="logo__mark"><use href="#logo-mark"/></svg><span class="logo__text"><strong>Nathan Zurita</strong><small>Full Stack Developer</small></span></a>
+      <nav class="nav__links" id="menu" aria-label="Principal">
+        <a href="../#sobre"><i>01</i>Sobre</a>
+        <a href="../#experiencia"><i>02</i>Trajetória</a>
+        <a href="../#projetos" class="is-active"><i>03</i>Projetos</a>
+        <a href="../#habilidades"><i>04</i>Stack</a>
+        <a href="../#contato"><i>05</i>Contato</a>
+      </nav>
+      <a class="nav__cta" href="https://wa.me/5527999299325?text=Ol%C3%A1%20Nathan!%20Vi%20o%20case%20do%20AcadFlow%20e%20gostaria%20de%20conversar." target="_blank" rel="noopener"><span class="live"></span> Vamos conversar</a>
+      <button class="nav__burger" id="menu-toggle" type="button" aria-label="Abrir menu" aria-expanded="false" aria-controls="menu"><span></span><span></span></button>
+    </div>
+  </header>
+
+  <main>
+    <section class="case-hero">
+      <div class="container">
+        <a class="back" href="../#projetos"><svg><use href="#i-back"/></svg>Voltar aos projetos</a>
+        <p class="kicker"><i>Case 03</i> Pessoal · Full Stack</p>
+        <h1 class="case-title">Acad<span class="grad">Flow</span></h1>
+        <p class="case-tagline">Uma plataforma para grupos de faculdade pararem de se organizar pelo WhatsApp: <b>Kanban em tempo real</b>, <b>plano de tarefas gerado por IA</b> a partir do enunciado e um <b>Raio-X</b> que mostra quanto cada um contribuiu.</p>
+        <dl class="case-meta">
+          <div><dt>Papel</dt><dd>Full Stack · projeto solo</dd></div>
+          <div><dt>Período</dt><dd>Jun/2026 — hoje</dd></div>
+          <div><dt>Stack</dt><dd>Laravel 13 · Vue 3 · TS</dd></div>
+          <div><dt>Status</dt><dd><span class="live"></span> No ar</dd></div>
+        </dl>
+        <div class="case-actions">
+          <a class="btn btn--primary magnetic" href="https://acadflow.online" target="_blank" rel="noopener"><svg><use href="#i-globe"/></svg><span>Abrir o AcadFlow</span><svg><use href="#i-arrow"/></svg></a>
+          <a class="btn btn--ghost magnetic" href="#problema"><span>Ler o case</span><svg><use href="#i-down"/></svg></a>
+        </div>
+        <div class="case-visual">
+          <div class="card__art art-acad">
+            <div class="kanban"><div><i></i><i></i><i></i></div><div><i class="drag"></i><i></i></div><div><i></i></div></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="container">
+      <section class="case-section" id="problema">
+        <div class="case-section__label"><p class="kicker"><i>01</i> Contexto</p><h2>O problema</h2></div>
+        <div class="case-section__body">
+          <p class="lead-big">Trabalho em grupo na faculdade quase sempre vira o mesmo caos: tarefas combinadas no WhatsApp, arquivos soltos no Drive e ninguém sabe direito quem está fazendo o quê.</p>
+          <p>O AcadFlow nasceu como <b>trabalho de faculdade</b>, mas a partir de uma dor que todo estudante conhece. Os prazos estouram porque não existe um lugar único para acompanhar o andamento, e na hora da nota não há como mostrar, de forma justa, quanto cada pessoa contribuiu.</p>
+          <p>Ferramentas como Trello e Notion resolvem a organização, mas não foram pensadas para o ciclo de um trabalho acadêmico: enunciado, divisão de tarefas, reuniões, ensaio da apresentação e entrega.</p>
+        </div>
+      </section>
+
+      <section class="case-section">
+        <div class="case-section__label"><p class="kicker"><i>02</i> Produto</p><h2>A solução</h2></div>
+        <div class="case-section__body">
+          <p>Construí sozinho uma aplicação completa, do banco ao deploy, com recursos pensados para o fluxo de um grupo de faculdade:</p>
+          <div class="features">
+            <article class="feature glass"><span class="bento__ico"><svg><use href="#i-kanban"/></svg></span><h3>Kanban em tempo real</h3><p>Cinco colunas com arrastar e soltar, filtros por prioridade, responsável e tag. Quando alguém move um cartão, todo o grupo vê na hora.</p></article>
+            <article class="feature glass"><span class="bento__ico"><svg><use href="#i-spark"/></svg></span><h3>Plano de tarefas com IA</h3><p>O grupo envia o enunciado (texto ou PDF) e a IA da Anthropic propõe as tarefas com prioridade, prazo e responsáveis sugeridos. Tudo chega como prévia para revisar antes de salvar.</p></article>
+            <article class="feature glass"><span class="bento__ico"><svg><use href="#i-chart"/></svg></span><h3>Raio-X do grupo</h3><p>Uma pontuação de contribuição por membro: tarefas concluídas (divididas entre os responsáveis e com peso pela prioridade), horas de foco, comentários e arquivos, menos atrasos em aberto.</p></article>
+            <article class="feature glass"><span class="bento__ico"><svg><use href="#i-timer"/></svg></span><h3>Ensaio da apresentação</h3><p>O grupo define a ordem e o tempo de cada um, e um cronômetro sincronizado pelo servidor passa a vez como um bastão: todo mundo vê o mesmo tempo.</p></article>
+            <article class="feature glass"><span class="bento__ico"><svg><use href="#i-bell"/></svg></span><h3>Cutucão e notificações</h3><p>Dá para "cutucar" quem está com uma tarefa parada: chega uma notificação e o cartão treme no Kanban de quem está online. O limite é um por pessoa e tarefa a cada 3 horas, para não virar spam.</p></article>
+            <article class="feature glass"><span class="bento__ico"><svg><use href="#i-card"/></svg></span><h3>Produto de verdade</h3><p>Login com Google, convites por link, planos Free e Pro com assinatura via Asaas, webhooks, Pomodoro, reuniões, notas, enquetes e uma retrospectiva do semestre ("Wrapped").</p></article>
+          </div>
+        </div>
+      </section>
+
+      <section class="case-section">
+        <div class="case-section__label"><p class="kicker"><i>03</i> Arquitetura</p><h2>Como funciona</h2></div>
+        <div class="case-section__body">
+          <p>Uma SPA em Vue conversa com uma API REST em Laravel. Toda mudança relevante vira um evento, que o Reverb transmite por WebSocket para quem está com o projeto aberto.</p>
+          <div class="flow" role="img" aria-label="Diagrama: o navegador com Vue 3 chama a API Laravel, que grava no MySQL e transmite eventos pelo Reverb de volta ao navegador; serviços externos: Anthropic, Asaas, Google e armazenamento S3.">
+            <div class="flow__row">
+              <div class="node node--accent"><b>Navegador</b><span>Vue 3 · TypeScript · Pinia · Vue Router · Inertia · Tailwind</span></div>
+              <div class="flow__arrow"><svg><use href="#i-right"/></svg></div>
+              <div class="node node--accent"><b>API REST · Laravel 13</b><span>Sanctum · Form Requests · Policies · Resources · Services</span></div>
+              <div class="flow__arrow"><svg><use href="#i-right"/></svg></div>
+              <div class="node"><b>MySQL</b><span>Eloquent · Migrations · Observers</span></div>
+            </div>
+            <div class="flow__down"><svg><use href="#i-down"/></svg></div>
+            <div class="flow__row">
+              <div class="node node--cyan"><b>Eventos</b><span>TaskChanged · CommentPosted · NotificationSent…</span></div>
+              <div class="flow__arrow"><svg><use href="#i-right"/></svg></div>
+              <div class="node node--cyan"><b>Laravel Reverb</b><span>WebSocket em canais privados</span></div>
+              <div class="flow__arrow"><svg><use href="#i-right"/></svg></div>
+              <div class="node node--cyan"><b>Laravel Echo</b><span>atualiza as stores Pinia → a interface reage</span></div>
+            </div>
+            <div class="flow__row">
+              <div class="node"><b>Anthropic</b><span>plano de tarefas a partir do enunciado</span></div>
+              <div class="node"><b>Asaas</b><span>assinaturas + webhook de pagamento</span></div>
+              <div class="node"><b>Google OAuth</b><span>login social</span></div>
+              <div class="node"><b>Storage S3</b><span>uploads persistentes</span></div>
+            </div>
+            <p class="flow__caption">Integrações externas ficam isoladas em Services; o webhook de pagamento tem testes próprios.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="case-section">
+        <div class="case-section__label"><p class="kicker"><i>04</i> Engenharia</p><h2>Decisões técnicas</h2></div>
+        <div class="case-section__body">
+          <div class="decisions">
+            <article class="decision glass"><h3>Broadcast síncrono, sem fila</h3><p>Os eventos usam <b>ShouldBroadcastNow</b>, então o deploy não precisa de um worker de fila rodando o tempo todo: fica mais simples e mais barato. Se o WebSocket cair, o front passa a fazer <b>polling</b> sozinho.</p></article>
+            <article class="decision glass"><h3>Autorização em Policies, testada</h3><p>Cada ação passa por uma Policy, e há testes que tentam acessar dados de <b>outro projeto</b>. Um membro nunca enxerga o que não é do grupo dele.</p></article>
+            <article class="decision glass"><h3>IA como prévia, com limite de uso</h3><p>A IA nunca grava direto: ela devolve uma <b>proposta normalizada</b> (status, prioridades e responsáveis válidos) que o usuário revisa. Um limite de uso por plano controla o custo da API.</p></article>
+            <article class="decision glass"><h3>O relógio é do servidor</h3><p>No ensaio da apresentação, o estado só muda quando alguém age e o tempo é calculado a partir de um <b>instante de referência do servidor</b>. Assim todos os navegadores mostram o mesmo cronômetro, sem precisar ficar sincronizando.</p></article>
+            <article class="decision glass"><h3>138 testes com Pest</h3><p>Os testes de feature cobrem permissões, convites, limites de membros e de IA, webhooks de pagamento, notificações, quadro e agendamentos. Isso me dá segurança para mudar o código sem medo.</p></article>
+          </div>
+        </div>
+      </section>
+
+      <section class="case-section">
+        <div class="case-section__label"><p class="kicker"><i>05</i> Desafios</p><h2>O que deu trabalho</h2></div>
+        <div class="case-section__body">
+          <div class="challenges">
+            <article class="challenge glass"><span class="tag-x">Deploy</span><div><h3>Arquivos sumindo a cada deploy</h3><p>Em hospedagem com container efêmero, fotos e anexos se perdiam a cada nova versão. Movi os uploads para um <b>object storage compatível com S3</b>, e eles passaram a persistir.</p></div></article>
+            <article class="challenge glass"><span class="tag-x">Produto</span><div><h3>Medir contribuição de forma justa</h3><p>Contar só tarefas concluídas premiava quem pegava as fáceis. O Raio-X divide cada tarefa entre os responsáveis, dá peso pela prioridade, soma horas de foco e participação e desconta atrasos.</p></div></article>
+            <article class="challenge glass"><span class="tag-x">Tempo real</span><div><h3>Tempo real que não quebra</h3><p>WebSocket é ótimo até a conexão cair. Desenhei o front para tratar o tempo real como bônus: com o Reverb fora, a interface continua consistente por polling.</p></div></article>
+          </div>
+        </div>
+      </section>
+
+      <section class="case-section">
+        <div class="case-section__label"><p class="kicker"><i>06</i> Resultado</p><h2>Em números</h2></div>
+        <div class="case-section__body">
+          <div class="stats case-stats">
+            <div class="stat"><strong><span data-count="138">138</span></strong><span>testes automatizados<br>com Pest</span></div>
+            <div class="stat"><strong><span data-count="112">112</span></strong><span>commits desde<br>junho de 2026</span></div>
+            <div class="stat"><strong><span data-count="25">25</span>+</strong><span>models Eloquent<br>no domínio</span></div>
+            <div class="stat"><strong><span data-count="1">1</span></strong><span>pessoa: back, front<br>e deploy</span></div>
+          </div>
+          <p style="margin-top:28px">O AcadFlow está no ar em <a class="hover-line" href="https://acadflow.online" target="_blank" rel="noopener"><b>acadflow.online</b></a>. Foi o projeto em que mais aprendi a pensar como produto: além de "funcionar", precisava ser justo com o grupo, aguentar falhas de rede e caber em uma hospedagem barata.</p>
+        </div>
+      </section>
+    </div>
+
+    <section class="case-next">
+      <div class="container">
+        <p class="kicker"><i>Próximo case</i></p>
+        <h2><a href="uvv-monitor.html">UVV Monitor →</a></h2>
+        <div class="case-next__actions">
+          <a class="btn btn--primary magnetic" href="uvv-monitor.html"><span>Ler o próximo case</span><svg><use href="#i-right"/></svg></a>
+          <a class="btn btn--ghost magnetic" href="../#contato"><span>Falar comigo</span></a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer__inner">
+      <p>© <span id="year">2026</span> Nathan Zurita Barreto</p>
+      <a href="../#projetos" class="hover-line footer__top">Ver todos os projetos <svg><use href="#i-back"/></svg></a>
+    </div>
+  </footer>
+
+  <a class="wa-fab" href="https://wa.me/5527999299325?text=Ol%C3%A1%20Nathan!%20Vi%20o%20case%20do%20AcadFlow%20e%20gostaria%20de%20conversar." target="_blank" rel="noopener" aria-label="Falar no WhatsApp">
+    <svg viewBox="0 0 24 24" class="fill"><path d="M17.5 14.4c-.3-.1-1.8-.9-2-1-.3-.1-.5-.1-.7.1-.2.3-.8 1-.9 1.2-.2.2-.3.2-.6.1-.3-.1-1.3-.5-2.4-1.5-.9-.8-1.5-1.8-1.7-2.1-.2-.3 0-.5.1-.6l.4-.5c.2-.2.2-.3.3-.5.1-.2 0-.4 0-.5l-.9-2.2c-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.5s1.1 2.9 1.2 3.1c.1.2 2.1 3.2 5.1 4.5.7.3 1.3.5 1.7.6.7.2 1.4.2 1.9.1.6-.1 1.8-.7 2-1.4.2-.7.2-1.3.2-1.4-.1-.1-.3-.2-.6-.4zM12 21.8c-1.8 0-3.5-.5-5-1.4l-.4-.2-3.7 1 1-3.6-.2-.4A9.8 9.8 0 1 1 12 21.8zm8.4-18.2A11.8 11.8 0 0 0 1.7 17.8L0 24l6.3-1.7A11.8 11.8 0 0 0 24 12c0-3.2-1.2-6.1-3.6-8.4z"/></svg>
+    <span class="wa-fab__tip">Fale comigo!</span>
+  </a>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
+  <script type="module" src="case.js"></script>
+</body>
+</html>

@@ -1,0 +1,88 @@
+/* Estilos das páginas de case (usa os tokens e componentes de ../style.css) */
+
+.case-hero { padding: 150px 0 40px; position: relative; }
+.back { display: flex; width: fit-content; align-items: center; gap: 8px; color: var(--muted); font-weight: 600; font-size: 14.5px; margin-bottom: 34px; transition: color .25s, gap .3s var(--ease); }
+.back svg { font-size: 16px; }
+.back:hover { color: var(--text); gap: 12px; }
+.case-title { font: 800 clamp(3.4rem, 11vw, 10rem)/.9 var(--display); letter-spacing: -.045em; margin: 0 0 26px; }
+.case-tagline { font-size: clamp(1.15rem, 2vw, 1.5rem); color: var(--muted); max-width: 760px; line-height: 1.5; margin-bottom: 40px; text-shadow: 0 2px 18px rgba(7,7,12,.9); }
+.case-tagline b { color: var(--text); }
+
+.case-meta { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--glass-border); border: 1px solid var(--glass-border); border-radius: var(--radius); overflow: hidden; margin: 0 0 34px; }
+.case-meta > div { padding: 20px 22px; background: rgba(9,9,16,.75); backdrop-filter: blur(12px); }
+.case-meta dt { font: 500 11.5px var(--mono); color: var(--dim); text-transform: uppercase; letter-spacing: .12em; margin-bottom: 6px; }
+.case-meta dd { margin: 0; font-weight: 600; font-size: 15px; }
+.case-actions { display: flex; flex-wrap: wrap; gap: 12px; }
+
+.case-visual { margin-top: 60px; border-radius: 28px; overflow: hidden; border: 1px solid var(--glass-border); box-shadow: 0 40px 100px -40px rgba(139,127,255,.45); }
+.case-visual .card__art { height: clamp(260px, 38vw, 440px); }
+.case-visual .kanban { transform: scale(1.6); }
+.case-visual .chat { transform: scale(1.35); width: 52%; }
+
+.case-section { display: grid; grid-template-columns: 300px 1fr; gap: 60px; padding: 100px 0; border-top: 1px solid var(--glass-border); }
+.case-section__label { position: sticky; top: 110px; align-self: start; }
+.case-section__label h2 { font: 800 clamp(2rem, 3.4vw, 2.8rem)/1 var(--display); letter-spacing: -.03em; margin: 0; }
+.case-section__body > p { font-size: 1.12rem; color: var(--muted); max-width: 760px; }
+.case-section__body > p b { color: var(--text); }
+.case-section__body > p:last-child { margin-bottom: 0; }
+.lead-big { font: 600 clamp(1.4rem, 2.4vw, 2rem)/1.3 var(--display) !important; color: var(--text) !important; letter-spacing: -.01em; }
+
+.features { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px; margin-top: 10px; }
+.feature { padding: 26px; transition: border-color .35s, transform .35s var(--ease); }
+.feature:hover { border-color: rgba(139,127,255,.35); transform: translateY(-4px); }
+.feature h3 { font: 700 1.2rem/1.25 var(--display); margin: 16px 0 10px; }
+.feature p { color: var(--muted); font-size: 15px; margin: 0; }
+.feature .bento__ico { margin: 0; }
+
+/* Diagrama de arquitetura */
+.flow { display: grid; gap: 14px; margin-top: 8px; }
+.flow__row { display: flex; align-items: stretch; gap: 10px; flex-wrap: wrap; }
+.node { flex: 1 1 0; min-width: 150px; padding: 16px 18px; border-radius: 16px; background: rgba(14,14,24,.8); border: 1px solid var(--glass-border); backdrop-filter: blur(12px); }
+.node b { display: block; font: 600 14.5px var(--font); margin-bottom: 4px; }
+.node span { font: 12.5px/1.5 var(--mono); color: var(--muted); }
+.node--accent { border-color: rgba(139,127,255,.45); background: linear-gradient(135deg, rgba(139,127,255,.16), rgba(14,14,24,.85)); }
+.node--cyan { border-color: rgba(61,214,230,.4); background: linear-gradient(135deg, rgba(61,214,230,.12), rgba(14,14,24,.85)); }
+.flow__arrow { display: grid; place-items: center; color: var(--accent-2); font-size: 18px; flex: 0 0 auto; }
+.flow__down { display: grid; place-items: center; color: var(--accent-2); font-size: 18px; }
+.flow__caption { font: 12.5px var(--mono); color: var(--dim); margin-top: 6px; }
+
+/* Decisões técnicas */
+.decisions { display: grid; gap: 16px; counter-reset: dec; }
+.decision { display: grid; grid-template-columns: 1fr 1.25fr; gap: 26px; padding: 26px 28px; counter-increment: dec; }
+.decision h3 { font: 700 1.15rem/1.3 var(--display); margin: 0; display: flex; gap: 12px; }
+.decision h3::before { content: counter(dec, decimal-leading-zero); font: 500 13px var(--mono); color: var(--accent-2); padding-top: 4px; }
+.decision p { margin: 0; color: var(--muted); font-size: 15px; }
+.decision p b { color: var(--text); }
+
+.challenges { display: grid; gap: 14px; }
+.challenge { display: grid; grid-template-columns: auto 1fr; gap: 18px; align-items: start; padding: 22px 24px; }
+.challenge .tag-x { font: 600 11px var(--mono); text-transform: uppercase; letter-spacing: .1em; padding: 5px 10px; border-radius: 999px; background: rgba(255,106,213,.12); color: #ffb0ea; border: 1px solid rgba(255,106,213,.28); white-space: nowrap; }
+.challenge h3 { font: 700 1.08rem/1.3 var(--display); margin: 0 0 6px; }
+.challenge p { margin: 0; color: var(--muted); font-size: 15px; }
+
+.case-stats { margin: 0; }
+
+.case-next { padding: 110px 0 130px; text-align: center; border-top: 1px solid var(--glass-border); }
+.case-next p { color: var(--muted); }
+.case-next h2 { font: 800 clamp(2.4rem, 7vw, 6rem)/.95 var(--display); letter-spacing: -.04em; margin: 10px 0 34px; }
+.case-next h2 a { transition: color .3s; }
+.case-next h2 a:hover { color: var(--accent-2); }
+.case-next__actions { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; }
+
+@media (max-width: 1000px) {
+  .case-section { grid-template-columns: 1fr; gap: 28px; padding: 80px 0; }
+  .case-section__label { position: static; }
+  .case-meta { grid-template-columns: repeat(2, 1fr); }
+  .decision { grid-template-columns: 1fr; gap: 10px; }
+}
+@media (max-width: 600px) {
+  .case-hero { padding-top: 120px; }
+  .case-title { font-size: 12.5vw; }
+  .features { grid-template-columns: 1fr; }
+  .flow__row { flex-direction: column; }
+  .flow__arrow { transform: rotate(90deg); }
+  .case-visual .kanban { transform: scale(1.1); }
+  .case-visual .chat { transform: none; width: 86%; }
+  .challenge { grid-template-columns: 1fr; gap: 10px; }
+  .challenge .tag-x { justify-self: start; }
+}

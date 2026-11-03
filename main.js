@@ -301,6 +301,49 @@ $('#copy-email').addEventListener('click', async e => {
 
 $('#year').textContent = new Date().getFullYear();
 
+/* ---------- Formulário de contato (Formspree) ---------- */
+const cform = $('#cform');
+if (cform) {
+  const status = $('#cform-status');
+  const submitBtn = $('button[type="submit"]', cform);
+  const setStatus = (msg, kind = '') => { status.textContent = msg; status.className = 'cform__status' + (kind ? ' is-' + kind : ''); };
+  const configured = !/SEU_ID_AQUI/.test(cform.action);
+
+  cform.addEventListener('submit', async e => {
+    e.preventDefault();
+    let ok = true;
+    $$('input[required], textarea[required]', cform).forEach(f => {
+      const bad = !f.value.trim() || (f.type === 'email' && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(f.value.trim()));
+      f.closest('.field').classList.toggle('is-invalid', bad);
+      if (bad) ok = false;
+    });
+    if (!ok) { setStatus('Preencha nome, um e-mail válido e a mensagem.', 'err'); return; }
+
+    const data = new FormData(cform);
+    if (!configured) {
+      // Formspree ainda sem ID: abre o e-mail já preenchido
+      const body = `${data.get('mensagem')}\n\n— ${data.get('nome')} (${data.get('email')})`;
+      location.href = `mailto:nathanzurita8@gmail.com?subject=${encodeURIComponent('Contato pelo portfólio')}&body=${encodeURIComponent(body)}`;
+      setStatus('Abrindo seu app de e-mail…');
+      return;
+    }
+
+    submitBtn.disabled = true;
+    setStatus('Enviando…');
+    try {
+      const res = await fetch(cform.action, { method: 'POST', body: data, headers: { Accept: 'application/json' } });
+      if (!res.ok) throw new Error(res.status);
+      cform.reset();
+      setStatus('Mensagem enviada! Respondo o quanto antes.', 'ok');
+    } catch {
+      setStatus('Não consegui enviar agora. Tente pelo WhatsApp ou e-mail.', 'err');
+    } finally {
+      submitBtn.disabled = false;
+    }
+  });
+  cform.addEventListener('input', e => e.target.closest('.field')?.classList.remove('is-invalid'));
+}
+
 /* ---------- Simulador: cubo arrastável e troca de cor ---------- */
 const sim = $('#sim');
 if (sim) {

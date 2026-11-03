@@ -1,0 +1,214 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>UVV Monitor · Case | Nathan Zurita</title>
+  <meta name="description" content="Case do UVV Monitor: assistente acadêmico que junta Portal do Aluno, AVA, Gmail e Google Agenda num bot do Telegram com GPT. Node.js, TypeScript e Playwright.">
+  <meta name="theme-color" content="#07070c">
+  <meta property="og:title" content="UVV Monitor · Case | Nathan Zurita">
+  <meta property="og:description" content="Como transformei portal, AVA, e-mail e agenda num único assistente no Telegram, com coleta automática, avisos sem spam e IA com ferramentas.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://nathan-zurita-student.github.io/cases/uvv-monitor.html">
+  <meta property="og:image" content="https://nathan-zurita-student.github.io/assets/og-image.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><defs><linearGradient id='g' x1='0' y1='0' x2='1' y2='1'><stop offset='0' stop-color='%238b7fff'/><stop offset='1' stop-color='%233dd6e6'/></linearGradient></defs><rect width='64' height='64' rx='16' fill='url(%23g)'/><text x='50%' y='55%' text-anchor='middle' dominant-baseline='middle' font-family='Arial' font-weight='900' font-size='26' fill='white'>NZ</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../style.css">
+  <link rel="stylesheet" href="case.css">
+  <script type="importmap">
+    { "imports": {
+      "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js",
+      "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"
+    } }
+  </script>
+</head>
+<body data-hue="0.45">
+  <svg class="sprite" aria-hidden="true">
+    <defs><linearGradient id="nz-grad" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#8b7fff"/><stop offset=".55" stop-color="#3dd6e6"/><stop offset="1" stop-color="#ff6ad5"/></linearGradient></defs>
+    <symbol id="logo-mark" viewBox="0 0 40 40"><rect x="1" y="1" width="38" height="38" rx="11" fill="#11111b" stroke="url(#nz-grad)" stroke-width="1.5"/><path d="M12.5 27.5v-15l15 15v-15" fill="none" stroke="url(#nz-grad)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><circle cx="27.5" cy="12.5" r="2.2" fill="#fff"/></symbol>
+    <symbol id="i-back" viewBox="0 0 24 24"><path d="M19 12H5m0 0 6-6m-6 6 6 6"/></symbol>
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M7 17 17 7M8 7h9v9"/></symbol>
+    <symbol id="i-right" viewBox="0 0 24 24"><path d="M5 12h14m0 0-6-6m6 6-6 6"/></symbol>
+    <symbol id="i-down" viewBox="0 0 24 24"><path d="M12 5v14m0 0-6-6m6 6 6-6"/></symbol>
+    <symbol id="i-github" viewBox="0 0 24 24"><path d="M12 .5a11.5 11.5 0 0 0-3.6 22.4c.6.1.8-.3.8-.6v-2c-3.2.7-3.9-1.5-3.9-1.5-.5-1.3-1.3-1.7-1.3-1.7-1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1 1.8 2.8 1.3 3.5 1 .1-.8.4-1.3.7-1.6-2.6-.3-5.3-1.3-5.3-5.7 0-1.3.5-2.3 1.2-3.1-.1-.3-.5-1.5.1-3.1 0 0 1-.3 3.2 1.2a11 11 0 0 1 5.8 0c2.2-1.5 3.2-1.2 3.2-1.2.6 1.6.2 2.8.1 3.1.8.8 1.2 1.9 1.2 3.1 0 4.4-2.7 5.4-5.3 5.7.4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6A11.5 11.5 0 0 0 12 .5z"/></symbol>
+    <symbol id="i-telegram" viewBox="0 0 24 24"><path d="M21.9 4.3 18.7 19.4c-.2 1-.9 1.3-1.7.8l-4.8-3.6-2.3 2.2c-.3.3-.5.5-1 .5l.3-4.9 8.9-8c.4-.3-.1-.5-.6-.2L6.5 13.1l-4.7-1.5c-1-.3-1-1 .2-1.5L20.6 3c.9-.3 1.6.2 1.3 1.3z"/></symbol>
+    <symbol id="i-radar" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><path d="M12 12l6-6"/><circle cx="12" cy="12" r="1"/></symbol>
+    <symbol id="i-bell" viewBox="0 0 24 24"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></symbol>
+    <symbol id="i-tap" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="3"/><path d="M7 15h4M7 11h10"/></symbol>
+    <symbol id="i-chat" viewBox="0 0 24 24"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20.5l1.4-4.9A8 8 0 1 1 21 12z"/><path d="M8.5 12h.01M12 12h.01M15.5 12h.01"/></symbol>
+    <symbol id="i-folder" viewBox="0 0 24 24"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></symbol>
+    <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3 4 6v6c0 4.5 3.4 8.3 8 9 4.6-.7 8-4.5 8-9V6z"/><path d="m9 12 2 2 4-4"/></symbol>
+  </svg>
+
+  <canvas id="webgl" aria-hidden="true"></canvas>
+  <div class="grain" aria-hidden="true"></div>
+
+  <header class="nav">
+    <div class="container nav__inner">
+      <a href="../#inicio" class="logo" aria-label="Nathan Zurita, voltar ao início"><svg class="logo__mark"><use href="#logo-mark"/></svg><span class="logo__text"><strong>Nathan Zurita</strong><small>Full Stack Developer</small></span></a>
+      <nav class="nav__links" id="menu" aria-label="Principal">
+        <a href="../#sobre"><i>01</i>Sobre</a>
+        <a href="../#experiencia"><i>02</i>Trajetória</a>
+        <a href="../#projetos" class="is-active"><i>03</i>Projetos</a>
+        <a href="../#habilidades"><i>04</i>Stack</a>
+        <a href="../#contato"><i>05</i>Contato</a>
+      </nav>
+      <a class="nav__cta" href="https://wa.me/5527999299325?text=Ol%C3%A1%20Nathan!%20Vi%20o%20case%20do%20UVV%20Monitor%20e%20gostaria%20de%20conversar." target="_blank" rel="noopener"><span class="live"></span> Vamos conversar</a>
+      <button class="nav__burger" id="menu-toggle" type="button" aria-label="Abrir menu" aria-expanded="false" aria-controls="menu"><span></span><span></span></button>
+    </div>
+  </header>
+
+  <main>
+    <section class="case-hero">
+      <div class="container">
+        <a class="back" href="../#projetos"><svg><use href="#i-back"/></svg>Voltar aos projetos</a>
+        <p class="kicker"><i>Case 04</i> Pessoal · Automação + IA</p>
+        <h1 class="case-title">UVV <span class="grad">Monitor</span></h1>
+        <p class="case-tagline">Um assistente acadêmico que vigia o <b>Portal do Aluno, o AVA, o Gmail e a Google Agenda</b> por mim e conversa pelo <b>Telegram</b>: avisa só o que importa, lembra dos prazos e responde em linguagem natural.</p>
+        <dl class="case-meta">
+          <div><dt>Papel</dt><dd>Projeto solo, de ponta a ponta</dd></div>
+          <div><dt>Período</dt><dd>Set/2026 — hoje</dd></div>
+          <div><dt>Stack</dt><dd>Node.js · TypeScript · Playwright</dd></div>
+          <div><dt>Status</dt><dd><span class="live"></span> Em uso diário</dd></div>
+        </dl>
+        <div class="case-actions">
+          <a class="btn btn--primary magnetic" href="https://github.com/Nathan-Zurita-Student/uvv-monitor" target="_blank" rel="noopener"><svg class="fill"><use href="#i-github"/></svg><span>Ver o código</span><svg><use href="#i-arrow"/></svg></a>
+          <a class="btn btn--ghost magnetic" href="#problema"><span>Ler o case</span><svg><use href="#i-down"/></svg></a>
+        </div>
+        <div class="case-visual">
+          <div class="card__art art-bot">
+            <div class="chat"><span class="b in">chat, como tá minha semana?</span><span class="b out">O mais importante é a prova de segunda. Terça e quarta estão tranquilas: dá para adiantar a AOP que vence dia 13.</span><span class="b in">coloca um horário de estudo amanhã às 14h</span><span class="b out">Coloquei das 14h às 15h30 na sua Agenda.</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="container">
+      <section class="case-section" id="problema">
+        <div class="case-section__label"><p class="kicker"><i>01</i> Contexto</p><h2>O problema</h2></div>
+        <div class="case-section__body">
+          <p class="lead-big">Para saber o que tinha para fazer na semana, eu precisava abrir quatro lugares diferentes. E mesmo assim, prazo passava batido.</p>
+          <p>Avisos dos professores ficam no mural do <b>Portal do Aluno</b>, as atividades no <b>AVA</b>, comunicados chegam por <b>e-mail</b> e as aulas e provas vivem na <b>agenda</b>. Checar tudo todo dia é cansativo, e o que se perde no meio do caminho vira prova esquecida ou entrega atrasada.</p>
+          <p>Eu queria um único lugar que olhasse tudo por mim e só me chamasse quando algo realmente mudasse.</p>
+        </div>
+      </section>
+
+      <section class="case-section">
+        <div class="case-section__label"><p class="kicker"><i>02</i> Produto</p><h2>A solução</h2></div>
+        <div class="case-section__body">
+          <p>Um monitor que roda sozinho na nuvem e um bot no Telegram que funciona como um assistente pessoal focado em provas, trabalhos e prazos:</p>
+          <div class="features">
+            <article class="feature glass"><span class="bento__ico"><svg><use href="#i-radar"/></svg></span><h3>Coleta automática</h3><p>Lê, em modo somente leitura, o mural completo de cada turma, as atividades do AVA, o quadro de horários, o Gmail e a agenda, várias vezes ao dia, sem eu abrir nada.</p></article>
+            <article class="feature glass"><span class="bento__ico"><svg><use href="#i-bell"/></svg></span><h3>Avisos sem spam</h3><p>Um item só é avisado de novo quando algo relevante muda: prazo, conteúdo do professor ou urgência. Alertas escalonados para 3 dias antes, no dia e quando atrasa.</p></article>
+            <article class="feature glass"><span class="bento__ico"><svg><use href="#i-tap"/></svg></span><h3>Tudo por botões</h3><p>Concluir, ignorar, reabrir e desfazer na hora. "Lembrar" aceita texto livre como "amanhã 9h" ou "em 2 horas". Há um painel com Hoje, Semana, Provas, Prazos e Materiais.</p></article>
+            <article class="feature glass"><span class="bento__ico"><svg><use href="#i-chat"/></svg></span><h3>Conversa natural com IA</h3><p>Qualquer mensagem vai para um agente com GPT que usa ferramentas: consulta agenda, atividades e e-mails, cria eventos e lembretes e entende "sexta que vem". Antes de alterar ou apagar algo, ele confirma.</p></article>
+            <article class="feature glass"><span class="bento__ico"><svg><use href="#i-folder"/></svg></span><h3>Materiais dos professores</h3><p>Quando um professor posta um PDF ou slide, o arquivo chega no chat já com a matéria. Pelo menu, dá para reenviar qualquer material sem baixar de novo.</p></article>
+            <article class="feature glass"><span class="bento__ico"><svg><use href="#i-shield"/></svg></span><h3>Privado por padrão</h3><p>O bot só responde ao meu chat. Credenciais ficam em segredos do GitHub e do Apps Script, nunca no código, e o modo de teste (DRY_RUN) vem ligado por padrão.</p></article>
+          </div>
+        </div>
+      </section>
+
+      <section class="case-section">
+        <div class="case-section__label"><p class="kicker"><i>03</i> Arquitetura</p><h2>Como funciona</h2></div>
+        <div class="case-section__body">
+          <p>São dois caminhos: a <b>coleta</b>, que roda agendada no GitHub Actions, e a <b>conversa</b>, que responde na hora por um webhook gratuito no Google Apps Script. Os dois compartilham o mesmo estado numa planilha do Google.</p>
+          <div class="flow" role="img" aria-label="Diagrama: o GitHub Actions executa coletores do Portal, AVA, Gmail e Agenda; os itens são normalizados, deduplicados e salvos no Google Sheets; o Telegram envia mensagens a um webhook no Apps Script, que usa um agente GPT com ferramentas e lê o mesmo estado.">
+            <div class="flow__row">
+              <div class="node node--accent"><b>GitHub Actions</b><span>execuções agendadas (cron)</span></div>
+              <div class="flow__arrow"><svg><use href="#i-right"/></svg></div>
+              <div class="node"><b>Coletores</b><span>Playwright → Portal e AVA · Gmail API · Calendar API</span></div>
+              <div class="flow__arrow"><svg><use href="#i-right"/></svg></div>
+              <div class="node"><b>Normalização</b><span>hash · deduplicação · urgência · prioridade</span></div>
+            </div>
+            <div class="flow__down"><svg><use href="#i-down"/></svg></div>
+            <div class="flow__row">
+              <div class="node node--cyan"><b>Google Sheets</b><span>itens, status, lembretes, log de avisos</span></div>
+              <div class="flow__arrow"><svg><use href="#i-right"/></svg></div>
+              <div class="node node--cyan"><b>Telegram</b><span>cartões, resumos por horário, arquivos</span></div>
+            </div>
+            <div class="flow__row">
+              <div class="node node--accent"><b>Mensagem no Telegram</b><span>texto ou botão</span></div>
+              <div class="flow__arrow"><svg><use href="#i-right"/></svg></div>
+              <div class="node node--accent"><b>Webhook · Apps Script</b><span>resposta imediata, sem servidor pago</span></div>
+              <div class="flow__arrow"><svg><use href="#i-right"/></svg></div>
+              <div class="node"><b>Agente GPT</b><span>ferramentas: agenda, atividades, provas, Gmail, lembretes, memória</span></div>
+            </div>
+            <p class="flow__caption">O UVV Student Hub, meu app desktop, lê o mesmo estado por um token somente leitura.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="case-section">
+        <div class="case-section__label"><p class="kicker"><i>04</i> Engenharia</p><h2>Decisões técnicas</h2></div>
+        <div class="case-section__body">
+          <div class="decisions">
+            <article class="decision glass"><h3>Somente leitura, sem burlar nada</h3><p>Os coletores <b>nunca enviam nada</b> ao Portal e não guardam cookies. Se aparecer CAPTCHA ou MFA, o bot não tenta contornar: marca a fonte como "não verificada" e me avisa.</p></article>
+            <article class="decision glass"><h3>Falha isolada por fonte</h3><p>Se o login no Portal cair, <b>Gmail, Agenda e o resumo continuam funcionando</b>. Cada coletor falha sozinho, e o resumo diz exatamente o que foi e o que não foi verificado.</p></article>
+            <article class="decision glass"><h3>Infra 100% gratuita</h3><p><b>GitHub Actions</b> para a coleta, <b>Apps Script</b> como webhook e <b>Google Sheets</b> como banco: tudo gratuito, fácil de inspecionar e acessível pelos dois lados do sistema.</p></article>
+            <article class="decision glass"><h3>Deduplicação por hash</h3><p>A mesma atividade pode aparecer no mural, no AVA e no calendário. Cada item ganha uma <b>assinatura</b>, e o aviso só é repetido quando prazo, conteúdo ou urgência mudam.</p></article>
+            <article class="decision glass"><h3>IA opcional, não dependência</h3><p>Sem a chave da OpenAI, <b>botões, comandos, avisos e lembretes continuam funcionando</b>. A IA é uma camada de conversa por cima de ferramentas determinísticas.</p></article>
+            <article class="decision glass"><h3>Configuração validada e testes</h3><p>Variáveis de ambiente são validadas com <b>Zod</b> na inicialização, e há <b>233 testes com Vitest</b> cobrindo datas, prioridade, deduplicação, bot e agenda.</p></article>
+          </div>
+        </div>
+      </section>
+
+      <section class="case-section">
+        <div class="case-section__label"><p class="kicker"><i>05</i> Desafios</p><h2>O que deu trabalho</h2></div>
+        <div class="case-section__body">
+          <div class="challenges">
+            <article class="challenge glass"><span class="tag-x">Scraping</span><div><h3>Um portal que não foi feito para ser lido por máquina</h3><p>O mural carrega aos poucos ("Carregar mais…") e o AVA entra por SSO. Os coletores seguem a paginação até o fim, pegam a data de cada post e entram no AVA pelo mesmo botão que a interface usa.</p></div></article>
+            <article class="challenge glass"><span class="tag-x">Datas</span><div><h3>Entender "amanhã às 9h" no fuso certo</h3><p>Prazos, lembretes e a fala do usuário precisam bater com o fuso de São Paulo. Toda a lógica de datas tem testes próprios, incluindo frases como "sexta que vem" e "depois da aula".</p></div></article>
+            <article class="challenge glass"><span class="tag-x">UX</span><div><h3>Avisar sem incomodar</h3><p>Um monitor que avisa tudo vira ruído. Precisei de um log de assinaturas de cada aviso para saber quando algo é realmente novo, e de resumos agrupados quando chegam várias novidades juntas.</p></div></article>
+          </div>
+        </div>
+      </section>
+
+      <section class="case-section">
+        <div class="case-section__label"><p class="kicker"><i>06</i> Resultado</p><h2>Em números</h2></div>
+        <div class="case-section__body">
+          <div class="stats case-stats">
+            <div class="stat"><strong><span data-count="233">233</span></strong><span>testes automatizados<br>com Vitest</span></div>
+            <div class="stat"><strong><span data-count="6">6</span></strong><span>fontes e serviços<br>integrados</span></div>
+            <div class="stat"><strong><span data-count="3">3</span></strong><span>varreduras agendadas<br>por dia</span></div>
+            <div class="stat"><strong><span data-count="53">53</span></strong><span>commits desde<br>setembro de 2026</span></div>
+          </div>
+          <p style="margin-top:28px">Uso o UVV Monitor <b>todos os dias</b>: hoje é por ele que fico sabendo de provas, entregas e materiais novos. Foi onde mais pratiquei integração com APIs de terceiros, automação de navegador e o desenho de um agente de IA que usa ferramentas com segurança.</p>
+        </div>
+      </section>
+    </div>
+
+    <section class="case-next">
+      <div class="container">
+        <p class="kicker"><i>Outro case</i></p>
+        <h2><a href="acadflow.html">AcadFlow →</a></h2>
+        <div class="case-next__actions">
+          <a class="btn btn--primary magnetic" href="acadflow.html"><span>Ler o case do AcadFlow</span><svg><use href="#i-right"/></svg></a>
+          <a class="btn btn--ghost magnetic" href="../#contato"><span>Falar comigo</span></a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer__inner">
+      <p>© <span id="year">2026</span> Nathan Zurita Barreto</p>
+      <a href="../#projetos" class="hover-line footer__top">Ver todos os projetos <svg><use href="#i-back"/></svg></a>
+    </div>
+  </footer>
+
+  <a class="wa-fab" href="https://wa.me/5527999299325?text=Ol%C3%A1%20Nathan!%20Vi%20o%20case%20do%20UVV%20Monitor%20e%20gostaria%20de%20conversar." target="_blank" rel="noopener" aria-label="Falar no WhatsApp">
+    <svg viewBox="0 0 24 24" class="fill"><path d="M17.5 14.4c-.3-.1-1.8-.9-2-1-.3-.1-.5-.1-.7.1-.2.3-.8 1-.9 1.2-.2.2-.3.2-.6.1-.3-.1-1.3-.5-2.4-1.5-.9-.8-1.5-1.8-1.7-2.1-.2-.3 0-.5.1-.6l.4-.5c.2-.2.2-.3.3-.5.1-.2 0-.4 0-.5l-.9-2.2c-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.5s1.1 2.9 1.2 3.1c.1.2 2.1 3.2 5.1 4.5.7.3 1.3.5 1.7.6.7.2 1.4.2 1.9.1.6-.1 1.8-.7 2-1.4.2-.7.2-1.3.2-1.4-.1-.1-.3-.2-.6-.4zM12 21.8c-1.8 0-3.5-.5-5-1.4l-.4-.2-3.7 1 1-3.6-.2-.4A9.8 9.8 0 1 1 12 21.8zm8.4-18.2A11.8 11.8 0 0 0 1.7 17.8L0 24l6.3-1.7A11.8 11.8 0 0 0 24 12c0-3.2-1.2-6.1-3.6-8.4z"/></svg>
+    <span class="wa-fab__tip">Fale comigo!</span>
+  </a>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
+  <script type="module" src="case.js"></script>
+</body>
+</html>

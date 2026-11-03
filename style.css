@@ -341,17 +341,20 @@ html, body { overflow-x: clip; }
 
 /* ===== Contato ===== */
 .contact { text-align: center; padding-bottom: 120px; }
+/* Degradê no fim da página: escurece a cena 3D atrás dos links de contato */
+.contact::before { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 62%; pointer-events: none; background: linear-gradient(to bottom, rgba(7,7,12,0) 0%, rgba(7,7,12,.55) 35%, rgba(7,7,12,.9) 70%, var(--bg) 100%); }
+.contact > .container { position: relative; z-index: 1; }
 .contact .kicker { justify-content: center; }
 .contact__title { font: 800 clamp(2.4rem, 8.4vw, 8rem)/.95 var(--display); letter-spacing: -.04em; margin-bottom: 30px; text-shadow: 0 6px 40px rgba(0,0,0,.55); }
 .contact__lead { color: var(--muted); font-size: clamp(1.05rem, 1.6vw, 1.25rem); max-width: 600px; margin: 0 auto 40px; }
 .contact__actions { display: flex; flex-wrap: wrap; justify-content: center; gap: 14px; margin-bottom: 44px; }
-.socials { list-style: none; padding: 0; margin: 0; display: flex; flex-wrap: wrap; justify-content: center; gap: 14px 36px; font-weight: 600; color: var(--muted); }
+.socials { list-style: none; padding: 0; margin: 0; display: flex; flex-wrap: wrap; justify-content: center; gap: 14px 36px; font-weight: 600; color: #c9cadc; text-shadow: 0 2px 12px rgba(0,0,0,.8); }
 .socials a, .socials button { display: inline-flex; align-items: center; gap: 8px; }
 .socials svg { font-size: 16px; }
 .socials a:hover, .socials button:hover { color: var(--text); }
 
 /* Footer */
-.footer { border-top: 1px solid var(--glass-border); padding: 30px 0; color: var(--dim); font-size: 14px; background: rgba(7,7,12,.7); backdrop-filter: blur(10px); }
+.footer { border-top: 1px solid var(--glass-border); padding: 30px 0; color: var(--dim); font-size: 14px; background: var(--bg); }
 .footer__inner { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
 .footer p { margin: 0; }
 .footer__made, .footer__top { display: inline-flex; align-items: center; gap: 7px; }
@@ -422,6 +425,7 @@ html, body { overflow-x: clip; }
   .btn--xl { width: 100%; justify-content: center; padding: 18px 22px; font-size: 16px; }
   .wa-fab { width: 54px; height: 54px; font-size: 27px; right: 16px; bottom: 16px; }
   .footer__inner { justify-content: center; text-align: center; }
+  .footer { padding-bottom: 90px; }
 }
 
 @media (prefers-reduced-motion: reduce) {

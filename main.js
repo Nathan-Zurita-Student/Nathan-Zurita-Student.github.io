@@ -56,7 +56,7 @@ const presetsDesktop = {
   exp:     { x: 3.6,  y: -.4, z: -2,   scale: .75,  hue: .32, amp: .3 },
   work:    { x: 0,    y: 3.1, z: -5,   scale: .7,   hue: .48, amp: .45 },
   skills:  { x: -3.3, y: -.6, z: -2.5, scale: .8,   hue: .62, amp: .34 },
-  contact: { x: 0,    y: -1.7, z: -3,  scale: .95,  hue: .82, amp: .5 },
+  contact: { x: 0,    y: -2.5, z: -3.5, scale: .9,   hue: .82, amp: .5 },
 };
 const presetsMobile = {
   hero:    { x: .6,  y: -2,  z: -1.5, scale: .85, hue: 0,   amp: .32 },
@@ -178,8 +178,8 @@ function setupAnimations() {
     y: 60, opacity: 0, duration: 1.1, ease: 'expo.out',
     scrollTrigger: { trigger: el, start: 'top 88%' },
   }));
-  gsap.set('.job, .bento__item, .stat', { y: 70, opacity: 0 });
-  ScrollTrigger.batch('.job, .bento__item, .stat', {
+  gsap.set('.job, .bento__item, .stat, .card', { y: 70, opacity: 0 });
+  ScrollTrigger.batch('.job, .bento__item, .stat, .card', {
     start: 'top 90%',
     onEnter: batch => gsap.to(batch, { y: 0, opacity: 1, duration: 1, stagger: .1, ease: 'expo.out', overwrite: true }),
   });
@@ -200,29 +200,6 @@ function setupAnimations() {
   const track = $('.marquee__track');
   ScrollTrigger.create({
     onUpdate: self => gsap.to(track, { skewX: gsap.utils.clamp(-12, 12, self.getVelocity() / -150), duration: .4, overwrite: true }),
-  });
-
-  // Projetos: scroll horizontal no desktop
-  const mm = gsap.matchMedia();
-  mm.add('(min-width: 901px)', () => {
-    const work = $('#work-track');
-    const cards = $$('.card', work);
-    const dist = () => work.scrollWidth - innerWidth;
-    gsap.to(work, {
-      x: () => -dist(), ease: 'none',
-      scrollTrigger: {
-        trigger: '#projetos', pin: true, start: 'top top', end: () => '+=' + dist(), scrub: 1, invalidateOnRefresh: true,
-        onUpdate: self => {
-          $('#work-bar').style.transform = `scaleX(${self.progress})`;
-          $('#work-current').textContent = String(Math.min(cards.length, Math.round(self.progress * (cards.length - 1)) + 1)).padStart(2, '0');
-        },
-      },
-    });
-  });
-  mm.add('(max-width: 900px)', () => {
-    gsap.utils.toArray('.card').forEach(c => gsap.from(c, {
-      y: 80, opacity: 0, duration: 1, ease: 'expo.out', scrollTrigger: { trigger: c, start: 'top 90%' },
-    }));
   });
 }
 
@@ -318,7 +295,7 @@ function showToast(msg) {
 }
 $('#copy-email').addEventListener('click', async e => {
   const email = e.currentTarget.dataset.email;
-  try { await navigator.clipboard.writeText(email); showToast('E-mail copiado! ✓'); }
+  try { await navigator.clipboard.writeText(email); showToast('E-mail copiado!'); }
   catch { showToast(email); }
 });
 

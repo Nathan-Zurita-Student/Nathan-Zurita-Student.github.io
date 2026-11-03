@@ -24,10 +24,39 @@
   </script>
 </head>
 <body class="is-loading">
+  <!-- Ícones SVG -->
+  <svg class="sprite" aria-hidden="true">
+    <defs>
+      <linearGradient id="nz-grad" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#8b7fff"/><stop offset=".55" stop-color="#3dd6e6"/><stop offset="1" stop-color="#ff6ad5"/></linearGradient>
+    </defs>
+    <symbol id="logo-mark" viewBox="0 0 40 40">
+      <rect x="1" y="1" width="38" height="38" rx="11" fill="#11111b" stroke="url(#nz-grad)" stroke-width="1.5"/>
+      <path d="M12.5 27.5v-15l15 15v-15" fill="none" stroke="url(#nz-grad)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="27.5" cy="12.5" r="2.2" fill="#fff"/>
+    </symbol>
+    <symbol id="i-lock" viewBox="0 0 24 24"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></symbol>
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M7 17 17 7M8 7h9v9"/></symbol>
+    <symbol id="i-down" viewBox="0 0 24 24"><path d="M12 4v11m0 0-4-4m4 4 4-4M5 20h14"/></symbol>
+    <symbol id="i-up" viewBox="0 0 24 24"><path d="M12 20V5m0 0-5 5m5-5 5 5"/></symbol>
+    <symbol id="i-copy" viewBox="0 0 24 24"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></symbol>
+    <symbol id="i-globe" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></symbol>
+    <symbol id="i-book" viewBox="0 0 24 24"><path d="M4 19.5V5a2 2 0 0 1 2-2h14v15H6.5A2.5 2.5 0 0 0 4 20.5 2.5 2.5 0 0 0 6.5 23H20v-5"/></symbol>
+    <symbol id="i-coffee" viewBox="0 0 24 24"><path d="M17 8h1a4 4 0 0 1 0 8h-1"/><path d="M3 8h14v9a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4z"/><path d="M7 2v2M11 2v2M15 2v2"/></symbol>
+    <symbol id="i-server" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="7" rx="2"/><rect x="3" y="13" width="18" height="7" rx="2"/><path d="M7 7.5h.01M7 16.5h.01M11 7.5h6M11 16.5h6"/></symbol>
+    <symbol id="i-layout" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18M9 9v11"/></symbol>
+    <symbol id="i-cube" viewBox="0 0 24 24"><path d="M12 2.5 3.5 7v10l8.5 4.5 8.5-4.5V7z"/><path d="m3.5 7 8.5 4.5L20.5 7M12 11.5v10"/></symbol>
+    <symbol id="i-db" viewBox="0 0 24 24"><ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5v14c0 1.7 3.6 3 8 3s8-1.3 8-3V5"/><path d="M4 12c0 1.7 3.6 3 8 3s8-1.3 8-3"/></symbol>
+    <symbol id="i-git" viewBox="0 0 24 24"><circle cx="6" cy="5" r="2.2"/><circle cx="6" cy="19" r="2.2"/><circle cx="18" cy="7" r="2.2"/><path d="M6 7.2v9.6M18 9.2c0 4.5-4 5.8-9.8 6.8"/></symbol>
+    <symbol id="i-flask" viewBox="0 0 24 24"><path d="M9 3h6M10 3v6.5L4.6 18.6A1.6 1.6 0 0 0 6 21h12a1.6 1.6 0 0 0 1.4-2.4L14 9.5V3"/><path d="M7.5 15h9"/></symbol>
+    <symbol id="i-github" viewBox="0 0 24 24"><path d="M12 .5a11.5 11.5 0 0 0-3.6 22.4c.6.1.8-.3.8-.6v-2c-3.2.7-3.9-1.5-3.9-1.5-.5-1.3-1.3-1.7-1.3-1.7-1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1 1.8 2.8 1.3 3.5 1 .1-.8.4-1.3.7-1.6-2.6-.3-5.3-1.3-5.3-5.7 0-1.3.5-2.3 1.2-3.1-.1-.3-.5-1.5.1-3.1 0 0 1-.3 3.2 1.2a11 11 0 0 1 5.8 0c2.2-1.5 3.2-1.2 3.2-1.2.6 1.6.2 2.8.1 3.1.8.8 1.2 1.9 1.2 3.1 0 4.4-2.7 5.4-5.3 5.7.4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6A11.5 11.5 0 0 0 12 .5z"/></symbol>
+    <symbol id="i-linkedin" viewBox="0 0 24 24"><path d="M20.4 20.5h-3.6v-5.6c0-1.3 0-3-1.8-3s-2.1 1.4-2.1 2.9v5.7H9.3V9h3.4v1.6h.1c.5-.9 1.6-1.8 3.4-1.8 3.6 0 4.3 2.4 4.3 5.5v6.2zM5.3 7.4a2.1 2.1 0 1 1 0-4.2 2.1 2.1 0 0 1 0 4.2zM7.1 20.5H3.5V9h3.6v11.5zM22.2 0H1.8C.8 0 0 .8 0 1.7v20.6c0 .9.8 1.7 1.8 1.7h20.4c1 0 1.8-.8 1.8-1.7V1.7C24 .8 23.2 0 22.2 0z"/></symbol>
+    <symbol id="i-telegram" viewBox="0 0 24 24"><path d="M21.9 4.3 18.7 19.4c-.2 1-.9 1.3-1.7.8l-4.8-3.6-2.3 2.2c-.3.3-.5.5-1 .5l.3-4.9 8.9-8c.4-.3-.1-.5-.6-.2L6.5 13.1l-4.7-1.5c-1-.3-1-1 .2-1.5L20.6 3c.9-.3 1.6.2 1.3 1.3z"/></symbol>
+  </svg>
+
   <!-- Preloader -->
   <div class="loader" id="loader" aria-hidden="true">
     <div class="loader__inner">
-      <div class="loader__logo">NZ</div>
+      <svg class="loader__logo"><use href="#logo-mark"/></svg>
       <div class="loader__bar"><span id="loader-bar"></span></div>
       <div class="loader__count"><span id="loader-count">0</span>%</div>
     </div>
@@ -39,7 +68,7 @@
 
   <header class="nav" id="topo">
     <div class="container nav__inner">
-      <a href="#inicio" class="logo" aria-label="Início"><span class="logo__mark">NZ</span><span class="logo__text">nathan<b>.</b>zurita</span></a>
+      <a href="#inicio" class="logo" aria-label="Nathan Zurita, voltar ao início"><svg class="logo__mark"><use href="#logo-mark"/></svg><span class="logo__text"><strong>Nathan Zurita</strong><small>Full Stack Developer</small></span></a>
       <nav class="nav__links" id="menu" aria-label="Principal">
         <a href="#sobre"><i>01</i>Sobre</a>
         <a href="#experiencia"><i>02</i>Trajetória</a>
@@ -85,8 +114,8 @@
     <div class="marquee" aria-hidden="true">
       <div class="marquee__row">
         <div class="marquee__track">
-          <span>Laravel</span><i>✦</i><span>Vue 3</span><i>✦</i><span>Nuxt</span><i>✦</i><span>TypeScript</span><i>✦</i><span>Three.js</span><i>✦</i><span>PHP</span><i>✦</i><span>MySQL</span><i>✦</i><span>Docker</span><i>✦</i><span>Tailwind</span><i>✦</i><span>APIs REST</span><i>✦</i>
-          <span>Laravel</span><i>✦</i><span>Vue 3</span><i>✦</i><span>Nuxt</span><i>✦</i><span>TypeScript</span><i>✦</i><span>Three.js</span><i>✦</i><span>PHP</span><i>✦</i><span>MySQL</span><i>✦</i><span>Docker</span><i>✦</i><span>Tailwind</span><i>✦</i><span>APIs REST</span><i>✦</i>
+          <span>Laravel</span><i></i><span>Vue 3</span><i></i><span>Nuxt</span><i></i><span>TypeScript</span><i></i><span>Three.js</span><i></i><span>PHP</span><i></i><span>MySQL</span><i></i><span>Docker</span><i></i><span>Tailwind</span><i></i><span>APIs REST</span><i></i>
+          <span>Laravel</span><i></i><span>Vue 3</span><i></i><span>Nuxt</span><i></i><span>TypeScript</span><i></i><span>Three.js</span><i></i><span>PHP</span><i></i><span>MySQL</span><i></i><span>Docker</span><i></i><span>Tailwind</span><i></i><span>APIs REST</span><i></i>
         </div>
       </div>
     </div>
@@ -142,25 +171,20 @@
       </div>
     </section>
 
-    <!-- PROJETOS (scroll horizontal no desktop) -->
-    <section class="work" id="projetos" data-scene="work">
-      <div class="work__pin">
-        <div class="container work__head">
-          <div>
-            <p class="kicker"><i>03</i> Trabalhos selecionados</p>
-            <h2 class="title">Projetos</h2>
-          </div>
-          <p class="work__count mono"><span id="work-current">01</span> / 06</p>
-        </div>
-        <div class="work__track" id="work-track">
+    <!-- PROJETOS -->
+    <section class="section work" id="projetos" data-scene="work">
+      <div class="container">
+        <p class="kicker"><i>03</i> Trabalhos selecionados</p>
+        <h2 class="title">Projetos</h2>
+        <div class="projects">
 
-          <article class="card tilt" data-cursor="ver">
+          <article class="card tilt">
             <div class="card__art art-sim">
               <div class="cube"><div class="f f1"></div><div class="f f2"></div><div class="f f3"></div><div class="f f4"></div><div class="f f5"></div><div class="f f6"></div></div>
               <div class="swatches"><i></i><i></i><i></i><i></i><i></i></div>
             </div>
             <div class="card__body">
-              <div class="card__top"><span class="mono">01</span><span class="pill pill--lock">🔒 Corporativo · North Sales</span></div>
+              <div class="card__top"><span class="mono">01</span><span class="pill pill--lock"><svg><use href="#i-lock"/></svg>Corporativo · North Sales</span></div>
               <h3>Simulador 3D de Produtos</h3>
               <p>Plataforma white-label em que o cliente final personaliza um produto físico em 3D, em tempo real, antes de pedir orçamento. O mesmo frontend atende qualquer catálogo cadastrado.</p>
               <ul class="card__list">
@@ -169,11 +193,11 @@
                 <li>Adapters e tipos de domínio isolando a UI da API</li>
               </ul>
               <div class="tags"><span>Nuxt 4</span><span>Vue 3</span><span>TypeScript</span><span>Three.js</span><span>Tailwind</span><span>Vitest</span></div>
-              <p class="card__note">Código proprietário — detalhes omitidos por confidencialidade.</p>
+              <p class="card__note"><svg><use href="#i-lock"/></svg>Código proprietário — detalhes omitidos por confidencialidade.</p>
             </div>
           </article>
 
-          <article class="card tilt" data-cursor="ver">
+          <article class="card tilt">
             <div class="card__art art-bo">
               <div class="dash">
                 <div class="dash__side"><i></i><i></i><i></i><i></i></div>
@@ -185,7 +209,7 @@
               </div>
             </div>
             <div class="card__body">
-              <div class="card__top"><span class="mono">02</span><span class="pill pill--lock">🔒 Corporativo · North Sales</span></div>
+              <div class="card__top"><span class="mono">02</span><span class="pill pill--lock"><svg><use href="#i-lock"/></svg>Corporativo · North Sales</span></div>
               <h3>Backoffice do Simulador</h3>
               <p>Painel administrativo e API que alimentam o simulador: gestão de catálogo, produtos e templates visuais, com regras de publicação que só liberam um item quando todos os critérios estão completos.</p>
               <ul class="card__list">
@@ -194,13 +218,14 @@
                 <li>Pré-visualização 3D da cena dentro do painel</li>
               </ul>
               <div class="tags"><span>Laravel 13</span><span>PHP 8.4</span><span>Inertia</span><span>Vue 3</span><span>Tailwind v4</span><span>MySQL</span><span>Pest</span></div>
-              <p class="card__note">Código proprietário — detalhes omitidos por confidencialidade.</p>
+              <p class="card__note"><svg><use href="#i-lock"/></svg>Código proprietário — detalhes omitidos por confidencialidade.</p>
             </div>
           </article>
 
-          <article class="card tilt" data-cursor="ver">
+          <article class="card tilt">
             <div class="card__art art-acad">
               <div class="kanban"><div><i></i><i></i><i></i></div><div><i class="drag"></i><i></i></div><div><i></i></div></div>
+              <span class="card__live"><span class="live"></span>No ar</span>
             </div>
             <div class="card__body">
               <div class="card__top"><span class="mono">03</span><span class="pill">Pessoal · Full Stack</span></div>
@@ -212,12 +237,15 @@
                 <li>Dashboards com ApexCharts e testes com Pest</li>
               </ul>
               <div class="tags"><span>Laravel 13</span><span>Vue 3</span><span>TypeScript</span><span>Pinia</span><span>Inertia</span><span>Docker</span></div>
+              <div class="card__links">
+                <a class="card__btn card__btn--primary" href="https://acadflow.online" target="_blank" rel="noopener"><svg><use href="#i-globe"/></svg>Ver site<svg class="arrow"><use href="#i-arrow"/></svg></a>
+              </div>
             </div>
           </article>
 
-          <article class="card tilt" data-cursor="ver">
+          <article class="card tilt">
             <div class="card__art art-bot">
-              <div class="chat"><span class="b in">Quais provas tenho essa semana?</span><span class="b out">📚 2 provas e 1 trabalho até sexta. Quer que eu crie lembretes?</span><span class="b in">Sim!</span></div>
+              <div class="chat"><span class="b in">Quais provas tenho essa semana?</span><span class="b out"><svg><use href="#i-book"/></svg>2 provas e 1 trabalho até sexta. Quer que eu crie lembretes?</span><span class="b in">Sim!</span></div>
             </div>
             <div class="card__body">
               <div class="card__top"><span class="mono">04</span><span class="pill">Pessoal · Automação + IA</span></div>
@@ -229,11 +257,15 @@
                 <li>Deduplicação por hash e priorização de prazos</li>
               </ul>
               <div class="tags"><span>Node.js</span><span>TypeScript</span><span>Playwright</span><span>Google APIs</span><span>OpenAI</span></div>
-              <a class="card__link" href="https://github.com/Nathan-Zurita-Student/uvv-monitor" target="_blank" rel="noopener">Ver código ↗</a>
+              <div class="card__links">
+                <a class="card__btn card__btn--primary" href="https://github.com/Nathan-Zurita-Student/uvv-monitor" target="_blank" rel="noopener"><svg class="fill"><use href="#i-github"/></svg>Código<svg class="arrow"><use href="#i-arrow"/></svg></a>
+                <a class="card__btn" href="https://t.me/Monitor_academico_Uvv_bot" target="_blank" rel="noopener"><svg class="fill"><use href="#i-telegram"/></svg>Bot no Telegram<svg class="arrow"><use href="#i-arrow"/></svg></a>
+              </div>
+              <p class="card__note">O bot é pessoal: só responde ao meu chat, com os meus dados acadêmicos.</p>
             </div>
           </article>
 
-          <article class="card tilt" data-cursor="ver">
+          <article class="card tilt">
             <div class="card__art art-hub">
               <div class="cal"><b></b><b></b><b class="on"></b><b></b><b></b><b></b><b class="warn"></b><b></b><b></b><b></b><b></b><b class="on"></b><b></b><b></b><b></b><b class="on"></b><b></b><b></b><b></b><b></b><b></b></div>
             </div>
@@ -250,7 +282,7 @@
             </div>
           </article>
 
-          <article class="card tilt" data-cursor="ver">
+          <article class="card tilt">
             <div class="card__art art-game">
               <div class="forest"><i></i><i></i><i></i><i></i><i></i></div>
             </div>
@@ -268,7 +300,6 @@
           </article>
 
         </div>
-        <div class="container work__progress"><span id="work-bar"></span></div>
       </div>
     </section>
 
@@ -279,34 +310,41 @@
         <h2 class="title">Ferramentas <em>que domino</em></h2>
         <div class="bento">
           <div class="bento__item bento__item--big glass">
-            <span class="bento__ico">⚙️</span>
-            <h3>Backend &amp; APIs</h3>
+            <div class="bento__head"><span class="bento__ico"><svg><use href="#i-server"/></svg></span><h3>Backend &amp; APIs</h3></div>
             <p>Arquitetura MVC, regras de negócio, autenticação e APIs REST seguras.</p>
+            <div class="term" aria-hidden="true">
+              <div class="term__bar"><span></span><span></span><span></span><em>api.http</em></div>
+<pre><code><b class="m">POST</b> /api/projetos
+<i>Authorization: Bearer ••••••••</i>
+<i>Content-Type: application/json</i>
+
+<b class="ok">201 Created</b> <i>· 84 ms</i>
+{
+  <span class="k">"id"</span>: <span class="n">42</span>,
+  <span class="k">"nome"</span>: <span class="s">"AcadFlow"</span>,
+  <span class="k">"status"</span>: <span class="s">"publicado"</span>
+}<span class="caret"></span></code></pre>
+            </div>
             <div class="tags"><span>PHP</span><span>Laravel</span><span>Eloquent</span><span>Sanctum</span><span>Inertia</span><span>Node.js</span></div>
           </div>
           <div class="bento__item glass">
-            <span class="bento__ico">🎨</span>
-            <h3>Frontend</h3>
+            <div class="bento__head"><span class="bento__ico"><svg><use href="#i-layout"/></svg></span><h3>Frontend</h3></div>
             <div class="tags"><span>Vue 3</span><span>Nuxt</span><span>TypeScript</span><span>Pinia</span><span>Tailwind</span><span>React</span></div>
           </div>
           <div class="bento__item glass">
-            <span class="bento__ico">🧊</span>
-            <h3>3D &amp; Jogos</h3>
+            <div class="bento__head"><span class="bento__ico"><svg><use href="#i-cube"/></svg></span><h3>3D &amp; Jogos</h3></div>
             <div class="tags"><span>Three.js</span><span>WebGL</span><span>Unity</span><span>C#</span></div>
           </div>
           <div class="bento__item glass">
-            <span class="bento__ico">🗄️</span>
-            <h3>Dados</h3>
+            <div class="bento__head"><span class="bento__ico"><svg><use href="#i-db"/></svg></span><h3>Dados</h3></div>
             <div class="tags"><span>MySQL</span><span>SQL</span><span>SQLite</span><span>Modelagem</span></div>
           </div>
           <div class="bento__item glass">
-            <span class="bento__ico">🚀</span>
-            <h3>DevOps &amp; fluxo</h3>
+            <div class="bento__head"><span class="bento__ico"><svg><use href="#i-git"/></svg></span><h3>DevOps &amp; fluxo</h3></div>
             <div class="tags"><span>Git</span><span>Docker</span><span>GitHub Actions</span><span>Bitbucket</span><span>Scrum</span></div>
           </div>
           <div class="bento__item bento__item--wide glass">
-            <span class="bento__ico">🧪</span>
-            <h3>Qualidade &amp; automação</h3>
+            <div class="bento__head"><span class="bento__ico"><svg><use href="#i-flask"/></svg></span><h3>Qualidade &amp; automação</h3></div>
             <div class="tags"><span>Pest</span><span>Vitest</span><span>Playwright</span><span>Python</span><span>Tauri</span><span>Electron</span></div>
           </div>
         </div>
@@ -330,10 +368,10 @@
           <a class="btn btn--ghost btn--xl magnetic" href="mailto:nathanzurita8@gmail.com"><span>nathanzurita8@gmail.com</span></a>
         </div>
         <ul class="socials">
-          <li><a href="https://www.linkedin.com/in/nathan-zurita" target="_blank" rel="noopener" class="hover-line">LinkedIn ↗</a></li>
-          <li><a href="https://github.com/Nathan-Zurita-Student" target="_blank" rel="noopener" class="hover-line">GitHub ↗</a></li>
-          <li><a href="assets/Curriculo-Nathan-Zurita.pdf" download class="hover-line">Currículo PDF ↓</a></li>
-          <li><button type="button" id="copy-email" class="hover-line" data-email="nathanzurita8@gmail.com">Copiar e-mail ⧉</button></li>
+          <li><a href="https://www.linkedin.com/in/nathan-zurita" target="_blank" rel="noopener" class="hover-line"><svg class="fill"><use href="#i-linkedin"/></svg>LinkedIn</a></li>
+          <li><a href="https://github.com/Nathan-Zurita-Student" target="_blank" rel="noopener" class="hover-line"><svg class="fill"><use href="#i-github"/></svg>GitHub</a></li>
+          <li><a href="assets/Curriculo-Nathan-Zurita.pdf" download class="hover-line"><svg><use href="#i-down"/></svg>Currículo PDF</a></li>
+          <li><button type="button" id="copy-email" class="hover-line" data-email="nathanzurita8@gmail.com"><svg><use href="#i-copy"/></svg>Copiar e-mail</button></li>
         </ul>
       </div>
     </section>
@@ -342,8 +380,8 @@
   <footer class="footer">
     <div class="container footer__inner">
       <p>© <span id="year">2026</span> Nathan Zurita Barreto</p>
-      <p class="mono">Feito com Three.js, GSAP &amp; muito café ☕</p>
-      <a href="#inicio" class="hover-line">Voltar ao topo ↑</a>
+      <p class="mono footer__made">Feito com Three.js, GSAP &amp; muito café <svg><use href="#i-coffee"/></svg></p>
+      <a href="#inicio" class="hover-line footer__top">Voltar ao topo <svg><use href="#i-up"/></svg></a>
     </div>
   </footer>
 
